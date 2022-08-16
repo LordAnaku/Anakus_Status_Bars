@@ -48,12 +48,12 @@ public class RenderHudElements implements HudRenderCallback {
         DrawableHelper.drawTexture(hudMatrix, side, posY + posYMod, 0,0, 81,9,256,256);
     }
 
-    public static void drawExhaustBar(boolean leftSide, int posYMod, int progress) {
+    public static void drawExhaustBar(boolean leftSide, int posYMod, int progress, float alpha) {
         if(leftSide) {
-            RenderSystem.setShaderColor(1, 1, 1, 1);
+            RenderSystem.setShaderColor(1, 1, 1, alpha);
             DrawableHelper.drawTexture(hudMatrix, posXLeft, posY + posYMod, 0, 0, progress, 27, 256, 256);
         } else {
-            RenderSystem.setShaderColor(1, 1, 1, 1);
+            RenderSystem.setShaderColor(1, 1, 1, alpha);
             DrawableHelper.drawTexture(hudMatrix, posXRight+(81-progress), posY + posYMod, 81-progress, 27, 81, 9, 256, 256);
         }
     }

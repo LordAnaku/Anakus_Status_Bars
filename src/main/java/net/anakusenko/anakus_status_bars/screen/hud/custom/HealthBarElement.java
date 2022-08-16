@@ -18,10 +18,9 @@ public class HealthBarElement {
     }
 
     public static void getHealthPercent() {
-        if(ModUtils.getPlayer() != null) {
-            float health = ModUtils.getPlayer().getHealth();
-            float healthMax = ModUtils.getPlayer().getMaxHealth();
-            progress = MathHelper.ceil((health/healthMax) * maxProgress);
-        }
+        assert ModUtils.getPlayer() != null;
+        float health = ModUtils.getPlayer().getHealth();
+        float healthMax = ModUtils.getPlayer().getMaxHealth();
+        progress = MathHelper.ceil((health/healthMax) * maxProgress);
     }
 }

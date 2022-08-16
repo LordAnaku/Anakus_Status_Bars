@@ -11,8 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 
 @Environment(EnvType.CLIENT)
 public class AnakusStatusBarsClient implements ClientModInitializer {
-    public static AnakusStatusBarsClient instance;
-
     @Override
     public void onInitializeClient() {
         HudRenderCallback.EVENT.register(new RenderHudElements());
