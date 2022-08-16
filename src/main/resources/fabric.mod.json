@@ -3,8 +3,8 @@
   "id": "anakus_status_bars",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Anaku's Status Bars",
+  "description": "This mod replaced the default status bars with a more modern look, as well as acts as a base for several of my other mods.",
   "authors": [
     "Me!"
   ],
@@ -16,11 +16,8 @@
   "license": "CC BY-NC-SA 4.0",
   "icon": "assets/anakus_status_bars/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
-    "main": [
-      "net.anakusenko.anakus_status_bars.AnakusStatusBarsCore"
-    ],
     "client": [
       "net.anakusenko.anakus_status_bars.AnakusStatusBarsClient"
     ]
