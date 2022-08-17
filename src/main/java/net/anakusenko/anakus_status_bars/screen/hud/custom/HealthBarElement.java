@@ -14,13 +14,14 @@ public class HealthBarElement {
     public static void drawHealthBar() {
         getHealthPercent();
         RenderHudElements.drawDefaultBar(true,-40);
-        RenderHudElements.drawProgressBar(true, -40, progress, 1f, 0.2f, 0.2f, .85f);
+        RenderHudElements.drawProgressBar(true, -40, progress, 0.8f, 0.2f, 0.2f, .85f);
     }
 
     public static void getHealthPercent() {
         assert ModUtils.getPlayer() != null;
         float health = ModUtils.getPlayer().getHealth();
         float healthMax = ModUtils.getPlayer().getMaxHealth();
-        progress = MathHelper.ceil((health/healthMax) * maxProgress);
+        float ratio = Math.min(1, Math.max(0, health / healthMax));
+        progress = Math.min(maxProgress, MathHelper.ceil(ratio * maxProgress) + 4);
     }
 }

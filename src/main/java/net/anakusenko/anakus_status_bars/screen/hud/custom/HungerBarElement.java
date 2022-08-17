@@ -9,7 +9,6 @@ import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class HungerBarElement {
-
     private static int currentHunger = 75;
     private static int currentSaturation = 50;
     private static int currentExhaust = 25;
@@ -24,25 +23,27 @@ public class HungerBarElement {
         RenderHudElements.drawDefaultBar(false,-40);
         RenderHudElements.drawProgressBar(false, -40, currentHunger, 0.8f,0.5f,0f,1);
         RenderHudElements.drawProgressBar(false, -40, currentSaturation, 1f,1f,0f,1);
-        RenderHudElements.drawExhaustBar(false, -40, currentExhaust, 0.5f);
+        RenderHudElements.drawExhaustBar(false, -40, currentExhaust, 0.35f);
     }
 
     private static void getHunger() {
         assert ModUtils.getPlayer() != null;
         int cFoodLevel = ModUtils.getPlayer().getHungerManager().getFoodLevel();
-        currentHunger = MathHelper.ceil((cFoodLevel/20f)*maxProgress);
+        float ratio = Math.min(1, Math.max(0, cFoodLevel / 20f));
+        currentHunger = Math.min(maxProgress, MathHelper.ceil(ratio*maxProgress) + 2);
     }
 
     private static void getSaturation() {
         assert ModUtils.getPlayer() != null;
         float cSatLevel = ModUtils.getPlayer().getHungerManager().getSaturationLevel();
-        currentSaturation = MathHelper.ceil((cSatLevel/20f)*maxProgress);
+        float ratio = Math.min(1, Math.max(0, cSatLevel / 20f));
+        currentSaturation = Math.min(maxProgress, MathHelper.ceil(ratio*maxProgress) + 2);
     }
 
     private static void getExhaust() {
         assert ModUtils.getPlayer() != null;
         float cExhLevel = ModUtils.getPlayer().getHungerManager().getExhaustion();
-        currentExhaust = MathHelper.ceil((cExhLevel/maxExhaust)*maxProgress);
-        ModUtils.sendMessage("Exhaust: " + currentExhaust);
+        float ratio = Math.min(1, Math.max(0, cExhLevel / maxExhaust));
+        currentExhaust = Math.min(maxProgress, MathHelper.ceil(ratio*maxProgress));
     }
 }
