@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
 
 public class ConfigFileHandler {
     public static void readFromConfig() {
@@ -23,19 +24,21 @@ public class ConfigFileHandler {
         }
 
         /* * Load settings * */
-        try {
-            for (Field field : Settings.class.getDeclaredFields()) {
-                Type fieldType = field.getType();
-                if (boolean.class.equals(fieldType)) {
-                    field.setBoolean(null, root.get(field.getName()).getAsBoolean());
-                } else if (int.class.equals(fieldType)) {
-                    field.setInt(null, root.get(field.getName()).getAsInt());
-                } else if (float.class.equals(fieldType)) {
-                    field.setFloat(null, root.get(field.getName()).getAsFloat());
+        if (Files.exists(getConfigFile().toPath())) {
+            try {
+                for (Field field : Settings.class.getDeclaredFields()) {
+                    Type fieldType = field.getType();
+                    if (boolean.class.equals(fieldType)) {
+                        field.setBoolean(null, root.get(field.getName()).getAsBoolean());
+                    } else if (int.class.equals(fieldType)) {
+                        field.setInt(null, root.get(field.getName()).getAsInt());
+                    } else if (float.class.equals(fieldType)) {
+                        field.setFloat(null, root.get(field.getName()).getAsFloat());
+                    }
                 }
+            } catch (IllegalAccessException e) {
+                LogHelper.error(e.getMessage());
             }
-        } catch (IllegalAccessException e) {
-            LogHelper.error(e.getMessage());
         }
     }
 
