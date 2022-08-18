@@ -1,6 +1,5 @@
 package net.anakusenko.anakus_status_bars.screen.gui.config;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,6 +10,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 
 public class ConfigFileHandler {
     public static void readFromConfig() {
@@ -21,48 +22,34 @@ public class ConfigFileHandler {
             LogHelper.error(e.getMessage());
         }
 
-        JsonObject finalRoot = root;
-        finalRoot.keySet().forEach(keyStr -> {
-            switch (keyStr) {
-                /* * Should Render Settings */
-                case "enableHealthBar" -> Settings.enableHealthBar = finalRoot.get(keyStr).getAsBoolean();
-                case "enableHungerBar" -> Settings.enableHungerBar = finalRoot.get(keyStr).getAsBoolean();
-                case "enableSaturationBar" -> Settings.enableSaturationBar = finalRoot.get(keyStr).getAsBoolean();
-                case "enableExhaustionBar" -> Settings.enableExhaustionBar = finalRoot.get(keyStr).getAsBoolean();
-                case "enableArmorBar" -> Settings.enableArmorBar = finalRoot.get(keyStr).getAsBoolean();
-                case "enableBreathBar" -> Settings.enableBreathBar = finalRoot.get(keyStr).getAsBoolean();
-                case "enableMountBar" -> Settings.enableMountBar = finalRoot.get(keyStr).getAsBoolean();
-                /* * Color Settings */
-                case "healthBarColor" -> Settings.healthBarColor = finalRoot.get(keyStr).getAsInt();
-                case "hungerBarColor" -> Settings.hungerBarColor = finalRoot.get(keyStr).getAsInt();
-                case "saturationBarColor" -> Settings.saturationBarColor = finalRoot.get(keyStr).getAsInt();
-                case "exhaustionBarAlpha" -> Settings.exhaustionBarAlpha = finalRoot.get(keyStr).getAsInt();
-                case "armorBarColor" -> Settings.armorBarColor = finalRoot.get(keyStr).getAsInt();
-                case "breathBarColor" -> Settings.breathBarColor = finalRoot.get(keyStr).getAsInt();
-                case "mountBarColor" -> Settings.mountBarColor = finalRoot.get(keyStr).getAsInt();
+        /* * Load settings * */
+        try {
+            for (Field field : Settings.class.getDeclaredFields()) {
+                Type fieldType = field.getType();
+                if (boolean.class.equals(fieldType)) {
+                    field.setBoolean(null, root.get(field.getName()).getAsBoolean());
+                } else if (int.class.equals(fieldType)) {
+                    field.setInt(null, root.get(field.getName()).getAsInt());
+                } else if (float.class.equals(fieldType)) {
+                    field.setFloat(null, root.get(field.getName()).getAsFloat());
+                }
             }
-        });
+        } catch (IllegalAccessException e) {
+            LogHelper.error(e.getMessage());
+        }
     }
 
     public static void writeToConfig() {
         JsonObject root = new JsonObject();
 
-        /* * Should Render Settings */
-        root.addProperty("enableArmorBar",Settings.enableArmorBar);
-        root.addProperty("enableBreathBar",Settings.enableBreathBar);
-        root.addProperty("enableExhaustionBar",Settings.enableExhaustionBar);
-        root.addProperty("enableHungerBar",Settings.enableHungerBar);
-        root.addProperty("enableHealthBar",Settings.enableHealthBar);
-        root.addProperty("enableMountBar",Settings.enableMountBar);
-        root.addProperty("enableSaturationBar",Settings.enableSaturationBar);
-        /* * Color Settings */
-        root.addProperty("armorBarColor",Settings.armorBarColor);
-        root.addProperty("breathBarColor",Settings.breathBarColor);
-        root.addProperty("exhaustionBarAlpha",Settings.exhaustionBarAlpha);
-        root.addProperty("hungerBarColor",Settings.hungerBarColor);
-        root.addProperty("healthBarColor",Settings.healthBarColor);
-        root.addProperty("mountBarColor",Settings.mountBarColor);
-        root.addProperty("saturationBarColor",Settings.saturationBarColor);
+        /* * Save settings * */
+        for (Field field : Settings.class.getDeclaredFields()) {
+            try {
+                root.addProperty(field.getName(), field.get(null).toString());
+            } catch (IllegalAccessException e) {
+                LogHelper.error(e.getMessage());
+            }
+        }
 
         try (FileWriter file = new FileWriter(getConfigFile())) {
             file.write(new GsonBuilder().setPrettyPrinting().create().toJson(root));
