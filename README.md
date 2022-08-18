@@ -1,9 +1,6 @@
-# Fabric Example Mod
+# Anaku's Status Bars
 
-## Setup
+## A Major WIP
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+A mod to add status bars instead of the default texture based status bars.
 
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.

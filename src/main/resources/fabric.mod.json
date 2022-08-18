@@ -6,11 +6,11 @@
   "name": "Anaku's Status Bars",
   "description": "This mod replaced the default status bars with a more modern look, as well as acts as a base for several of my other mods.",
   "authors": [
-    "Me!"
+    "LordAnaku"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/LordAnaku/Anakus_Status_Bars",
+    "sources": "https://github.com/LordAnaku/Anakus_Status_Bars"
   },
 
   "license": "CC BY-NC-SA 4.0",
