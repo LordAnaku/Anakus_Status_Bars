@@ -20,6 +20,9 @@
   "entrypoints": {
     "client": [
       "net.anakusenko.anakus_status_bars.AnakusStatusBarsClient"
+    ],
+    "modmenu": [
+      "net.anakusenko.anakus_status_bars.screen.gui.ModMenuIntegration"
     ]
   },
   "mixins": [

@@ -1,6 +1,7 @@
 package net.anakusenko.anakus_status_bars.screen.hud.custom;
 
 
+import net.anakusenko.anakus_status_bars.screen.gui.config.Settings;
 import net.anakusenko.anakus_status_bars.screen.hud.RenderHudElements;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
 import net.fabricmc.api.EnvType;
@@ -21,9 +22,9 @@ public class HungerBarElement {
         getSaturation();
         getExhaust();
         RenderHudElements.drawDefaultBar(false,-40);
-        RenderHudElements.drawProgressBar(false, -40, currentHunger, 0.8f,0.5f,0f,1);
-        RenderHudElements.drawProgressBar(false, -40, currentSaturation, 1f,1f,0f,1);
-        RenderHudElements.drawExhaustBar(false, -40, currentExhaust, 0.35f);
+        RenderHudElements.drawProgressBar(false, -40, currentHunger, Settings.hungerBarColor,1);
+        RenderHudElements.drawProgressBar(false, -40, currentSaturation, Settings.saturationBarColor,1);
+        RenderHudElements.drawExhaustBar(false, -40, currentExhaust, Settings.exhaustionBarAlpha);
     }
 
     private static void getHunger() {

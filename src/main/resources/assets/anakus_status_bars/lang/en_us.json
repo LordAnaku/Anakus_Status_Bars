@@ -1,4 +1,14 @@
 {
-  "key.categories.anakus_status_bars.main_key_category": "Anaku's Status Bar Keybindings",
-  "key.anakus_status_bars.toggle_bars": "Toggle Bars"
+  "title.anakus_status_bars.config": "Anaku Status Bars",
+
+  "category.anakus_status_bars.general": "General",
+  "option.anakus_status_bars.enable_saturation_bar": "Enable Saturation Bar",
+  "option.anakus_status_bars.enable_exhaustion_bar": "Enable Exhaustion Bar",
+
+  "category.anakus_status_bars.color": "Colors",
+  "option.anakus_status_bars.health_bar_color": "Health Bar Color",
+  "option.anakus_status_bars.hunger_bar_color": "Hunger Bar Color",
+  "option.anakus_status_bars.saturation_bar_color": "Saturation Bar Color",
+  "option.anakus_status_bars.exhaustion_bar_alpha": "Exhaustion Bar Alpha",
+  "option.anakus_status_bars.exhaustion_bar_alpha_tooltip": "The alpha of the exhaustion bar. 0 is fully transparent, 1 is fully opaque."
 }

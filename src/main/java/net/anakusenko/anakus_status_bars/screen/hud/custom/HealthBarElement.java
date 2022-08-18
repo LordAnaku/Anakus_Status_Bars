@@ -1,5 +1,6 @@
 package net.anakusenko.anakus_status_bars.screen.hud.custom;
 
+import net.anakusenko.anakus_status_bars.screen.gui.config.Settings;
 import net.anakusenko.anakus_status_bars.screen.hud.RenderHudElements;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
 import net.fabricmc.api.EnvType;
@@ -14,7 +15,7 @@ public class HealthBarElement {
     public static void drawHealthBar() {
         getHealthPercent();
         RenderHudElements.drawDefaultBar(true,-40);
-        RenderHudElements.drawProgressBar(true, -40, progress, 0.8f, 0.2f, 0.2f, .85f);
+        RenderHudElements.drawProgressBar(true, -40, progress, Settings.healthBarColor, .85f);
     }
 
     public static void getHealthPercent() {

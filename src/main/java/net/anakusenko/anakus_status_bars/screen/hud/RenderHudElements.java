@@ -3,6 +3,7 @@ package net.anakusenko.anakus_status_bars.screen.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.anakusenko.anakus_status_bars.screen.hud.custom.HealthBarElement;
 import net.anakusenko.anakus_status_bars.screen.hud.custom.HungerBarElement;
+import net.anakusenko.anakus_status_bars.utils.ColorUtils;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -54,12 +55,12 @@ public class RenderHudElements implements HudRenderCallback {
         }
     }
 
-    public static void drawProgressBar(boolean leftSide, int posYMod, int progress, float colorR, float colorG, float colorB, float alpha) {
+    public static void drawProgressBar(boolean leftSide, int posYMod, int progress, int color, float alpha) {
         if (leftSide) {
-            RenderSystem.setShaderColor(colorR, colorG, colorB, alpha);
+            RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), alpha);
             DrawableHelper.drawTexture(hudMatrix, posXLeft, posY + posYMod, 0, 9, progress, 9, 256, 256);
         } else {
-            RenderSystem.setShaderColor(colorR, colorG, colorB, alpha);
+            RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), alpha);
             DrawableHelper.drawTexture(hudMatrix, posXRight+(81-progress), posY + posYMod, 81-progress, 9, 81, 9, 256, 256);
         }
 
