@@ -5,6 +5,7 @@ import net.anakusenko.anakus_status_bars.screen.hud.custom.HealthBarElement;
 import net.anakusenko.anakus_status_bars.screen.hud.custom.HungerBarElement;
 import net.anakusenko.anakus_status_bars.utils.ColorUtils;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
+import net.anakusenko.anakus_status_bars.utils.TextureUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -42,27 +43,57 @@ public class RenderHudElements implements HudRenderCallback {
     public static void drawDefaultBar(boolean leftSide, int posYMod) {
         int side = (leftSide) ? posXLeft : posXRight;
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        DrawableHelper.drawTexture(hudMatrix, side, posY + posYMod, 0,0, 81,9,256,256);
+        DrawableHelper.drawTexture(hudMatrix, side, posY + posYMod, TextureUtils.DEFAULT_BAR.getStartX(), TextureUtils.DEFAULT_BAR.getStartY(), TextureUtils.DEFAULT_BAR.getWidth(), TextureUtils.DEFAULT_BAR.getHeight(), 256,256);
     }
 
     public static void drawExhaustBar(boolean leftSide, int posYMod, int progress, float alpha) {
+        RenderSystem.setShaderColor(1, 1, 1, alpha);
         if(leftSide) {
-            RenderSystem.setShaderColor(1, 1, 1, alpha);
-            DrawableHelper.drawTexture(hudMatrix, posXLeft, posY + posYMod, 0, 0, progress, 27, 256, 256);
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXLeft, posY + posYMod,
+                    TextureUtils.EXHAUSTION_BAR.getStartX(), TextureUtils.EXHAUSTION_BAR.getStartY(),
+                    progress, TextureUtils.EXHAUSTION_BAR.getHeight(),
+                    256, 256);
         } else {
-            RenderSystem.setShaderColor(1, 1, 1, alpha);
-            DrawableHelper.drawTexture(hudMatrix, posXRight+(81-progress), posY + posYMod, 81-progress, 27, 81, 9, 256, 256);
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXRight+(TextureUtils.EXHAUSTION_BAR.getWidth()-progress), posY + posYMod,
+                    TextureUtils.EXHAUSTION_BAR.getWidth()-progress, TextureUtils.EXHAUSTION_BAR.getStartY(),
+                    TextureUtils.EXHAUSTION_BAR.getWidth(), TextureUtils.EXHAUSTION_BAR.getHeight(),
+                    256, 256);
         }
     }
 
     public static void drawProgressBar(boolean leftSide, int posYMod, int progress, int color, float alpha) {
+        RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), alpha);
         if (leftSide) {
-            RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), alpha);
-            DrawableHelper.drawTexture(hudMatrix, posXLeft, posY + posYMod, 0, 9, progress, 9, 256, 256);
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXLeft, posY + posYMod,
+                    TextureUtils.PROGRESS_BAR.getStartX(), TextureUtils.PROGRESS_BAR.getStartY(),
+                    progress, TextureUtils.PROGRESS_BAR.getHeight(),
+                    256, 256);
         } else {
-            RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), alpha);
-            DrawableHelper.drawTexture(hudMatrix, posXRight+(81-progress), posY + posYMod, 81-progress, 9, 81, 9, 256, 256);
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXRight+(TextureUtils.PROGRESS_BAR.getWidth()-progress), posY + posYMod,
+                    TextureUtils.PROGRESS_BAR.getWidth()-progress, TextureUtils.PROGRESS_BAR.getStartY(),
+                    TextureUtils.PROGRESS_BAR.getWidth(), TextureUtils.PROGRESS_BAR.getHeight(),
+                    256, 256);
         }
+    }
 
+    public static void drawStatusEffectBar(boolean leftSide, int posYMod, int color, float alpha) {
+        RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), alpha);
+        if (leftSide) {
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXLeft, posY + posYMod,
+                    TextureUtils.DEFAULT_BAR.getStartX(), TextureUtils.DEFAULT_BAR.getStartY(),
+                    TextureUtils.DEFAULT_BAR.getWidth(), TextureUtils.DEFAULT_BAR.getHeight(),
+                    256, 256);
+        } else {
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXRight, posY + posYMod,
+                    TextureUtils.DEFAULT_BAR.getStartX(), TextureUtils.DEFAULT_BAR.getStartY(),
+                    TextureUtils.DEFAULT_BAR.getWidth(), TextureUtils.DEFAULT_BAR.getHeight(),
+                    256, 256);
+        }
     }
 }

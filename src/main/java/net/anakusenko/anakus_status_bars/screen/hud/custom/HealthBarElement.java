@@ -5,6 +5,7 @@ import net.anakusenko.anakus_status_bars.screen.hud.RenderHudElements;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
@@ -13,9 +14,18 @@ public class HealthBarElement {
     private static int maxProgress = 81;
 
     public static void drawHealthBar() {
-        getHealthPercent();
-        RenderHudElements.drawDefaultBar(true,-40);
-        RenderHudElements.drawProgressBar(true, -40, progress, Settings.healthBarColor, .85f);
+        if (Settings.enableHealthBar) {
+            getHealthPercent();
+            assert ModUtils.getPlayer() != null;
+            if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.POISON)) {
+                RenderHudElements.drawStatusEffectBar(true, -40, Settings.healthPoisonColor, .85f);
+            } else if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.WITHER)) {
+                RenderHudElements.drawStatusEffectBar(true, -40, Settings.healthWitherColor, .85f);
+            } else {
+                RenderHudElements.drawDefaultBar(true, -40);
+            }
+            RenderHudElements.drawProgressBar(true, -40, progress, Settings.healthBarColor, .85f);
+        }
     }
 
     public static void getHealthPercent() {

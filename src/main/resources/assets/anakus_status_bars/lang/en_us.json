@@ -2,13 +2,24 @@
   "title.anakus_status_bars.config": "Anaku Status Bars",
 
   "category.anakus_status_bars.general": "General",
+  "option.anakus_status_bars.enable_health_bar": "Enable Health Bar",
+  "option.anakus_status_bars.enable_hunger_bar": "Enable Hunger Bar",
   "option.anakus_status_bars.enable_saturation_bar": "Enable Saturation Bar",
   "option.anakus_status_bars.enable_exhaustion_bar": "Enable Exhaustion Bar",
+  "option.anakus_status_bars.enable_armor_bar": "Enable Armor Bar",
+  "option.anakus_status_bars.enable_breath_bar": "Enable Breath Bar",
+  "option.anakus_status_bars.enable_mount_bar": "Enable Mount Bar",
 
   "category.anakus_status_bars.color": "Colors",
   "option.anakus_status_bars.health_bar_color": "Health Bar Color",
+  "option.anakus_status_bars.health_poison_color": "Health Poison Bar Color",
+  "option.anakus_status_bars.health_wither_color": "Health Wither Bar Color",
   "option.anakus_status_bars.hunger_bar_color": "Hunger Bar Color",
+  "option.anakus_status_bars.hunger_effect_color": "Hunger Effect Bar Color",
   "option.anakus_status_bars.saturation_bar_color": "Saturation Bar Color",
   "option.anakus_status_bars.exhaustion_bar_alpha": "Exhaustion Bar Alpha",
-  "option.anakus_status_bars.exhaustion_bar_alpha_tooltip": "The alpha of the exhaustion bar. 0 is fully transparent, 1 is fully opaque."
+  "option.anakus_status_bars.exhaustion_bar_alpha_tooltip": "The alpha of the exhaustion bar. 0 is fully transparent, 1 is fully opaque.",
+  "option.anakus_status_bars.armor_bar_color": "Armor Bar Color",
+  "option.anakus_status_bars.breath_bar_color": "Breath Bar Color",
+  "option.anakus_status_bars.mount_bar_color": "Mount Bar Color"
 }

@@ -6,6 +6,7 @@ import net.anakusenko.anakus_status_bars.screen.hud.RenderHudElements;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
@@ -13,18 +14,31 @@ public class HungerBarElement {
     private static int currentHunger = 75;
     private static int currentSaturation = 50;
     private static int currentExhaust = 25;
-    private static int maxProgress = 81;
-    private static float maxExhaust = 4f;
+    private static final int maxProgress = 81;
 
 
     public static void drawHungerBar() {
-        getHunger();
-        getSaturation();
-        getExhaust();
-        RenderHudElements.drawDefaultBar(false,-40);
-        RenderHudElements.drawProgressBar(false, -40, currentHunger, Settings.hungerBarColor,1);
-        RenderHudElements.drawProgressBar(false, -40, currentSaturation, Settings.saturationBarColor,1);
-        RenderHudElements.drawExhaustBar(false, -40, currentExhaust, Settings.exhaustionBarAlpha);
+        if (Settings.enableHungerBar) {
+            assert ModUtils.getPlayer() != null;
+            if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
+                RenderHudElements.drawStatusEffectBar(false, -40, Settings.hungerEffectColor, .85f);
+            } else {
+                RenderHudElements.drawDefaultBar(false, -40);
+            }
+
+            getHunger();
+            RenderHudElements.drawProgressBar(false, -40, currentHunger, Settings.hungerBarColor, 1);
+
+            if (Settings.enableSaturationBar){
+                getSaturation();
+                RenderHudElements.drawProgressBar(false, -40, currentSaturation, Settings.saturationBarColor, 1);
+            }
+
+            if (Settings.enableExhaustionBar){
+                getExhaust();
+                RenderHudElements.drawExhaustBar(false, -40, currentExhaust, Settings.exhaustionBarAlpha);
+            }
+        }
     }
 
     private static void getHunger() {
@@ -44,6 +58,7 @@ public class HungerBarElement {
     private static void getExhaust() {
         assert ModUtils.getPlayer() != null;
         float cExhLevel = ModUtils.getPlayer().getHungerManager().getExhaustion();
+        float maxExhaust = 4f;
         float ratio = Math.min(1, Math.max(0, cExhLevel / maxExhaust));
         currentExhaust = Math.min(maxProgress, MathHelper.ceil(ratio*maxProgress));
     }
