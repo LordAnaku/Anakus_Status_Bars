@@ -9,11 +9,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public class RenderOverlayMixin extends DrawableHelper {
-
     @Inject(method = "renderStatusBars",
             at = @At("HEAD"),
             cancellable = true)
     private void renderStatusBars(CallbackInfo info) {
+        info.cancel();
+    }
+
+    @Inject(method = "renderMountHealth",
+            at = @At("HEAD"),
+            cancellable = true)
+    private void renderMountHealth(CallbackInfo info) {
         info.cancel();
     }
 }

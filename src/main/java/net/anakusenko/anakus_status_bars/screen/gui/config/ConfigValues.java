@@ -3,7 +3,12 @@ package net.anakusenko.anakus_status_bars.screen.gui.config;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.*;
+import net.anakusenko.anakus_status_bars.utils.ModUtils;
+import net.anakusenko.anakus_status_bars.utils.interfaces.HudElements;
 import net.minecraft.text.Text;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ConfigValues {
 
@@ -13,8 +18,11 @@ public class ConfigValues {
     public static BooleanListEntry enableSaturationBar;
     public static BooleanListEntry enableExhaustionBar;
     public static BooleanListEntry enableArmorBar;
+    public static BooleanListEntry enableAbsorptionBar;
     public static BooleanListEntry enableBreathBar;
     public static BooleanListEntry enableMountBar;
+    public static StringListListEntry leftOrder;
+    public static StringListListEntry rightOrder;
 
 
     /** Color Category */
@@ -26,6 +34,7 @@ public class ConfigValues {
     public static ColorEntry saturationBarColor;
     public static FloatListEntry exhaustionBarAlpha;
     public static ColorEntry armorBarColor;
+    public static ColorEntry absorptionBarColor;
     public static ColorEntry breathBarColor;
     public static ColorEntry mountBarColor;
 
@@ -65,6 +74,12 @@ public class ConfigValues {
                 .build();
         category.addEntry(enableArmorBar);
 
+        enableAbsorptionBar = builder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_absorption_bar"), Settings.enableAbsorptionBar)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> Settings.enableAbsorptionBar = newValue)
+                .build();
+        category.addEntry(enableAbsorptionBar);
+
         enableBreathBar = builder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_breath_bar"), Settings.enableBreathBar)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> Settings.enableBreathBar = newValue)
@@ -76,6 +91,18 @@ public class ConfigValues {
                 .setSaveConsumer(newValue -> Settings.enableMountBar = newValue)
                 .build();
         category.addEntry(enableMountBar);
+
+        leftOrder = builder.startStrList(Text.translatable("option.anakus_status_bars.left_order"), ModUtils.getStringList(Settings.leftOrder))
+                .setDefaultValue(Arrays.asList("Health", "Armor"))
+                .setSaveConsumer(newValue -> Settings.leftOrder = ModUtils.getJsonArray(newValue))
+                .build();
+        category.addEntry(leftOrder);
+
+        rightOrder = builder.startStrList(Text.translatable("option.anakus_status_bars.right_order"), ModUtils.getStringList(Settings.rightOrder))
+                .setDefaultValue(Arrays.asList("Hunger", "Breath", "MountHealth"))
+                .setSaveConsumer(newValue -> Settings.rightOrder = ModUtils.getJsonArray(newValue))
+                .build();
+        category.addEntry(rightOrder);
     }
 
     public static void buildColors(ConfigCategory category, ConfigEntryBuilder builder) {
@@ -129,6 +156,12 @@ public class ConfigValues {
                 .setSaveConsumer(newValue -> Settings.armorBarColor = newValue)
                 .build();
         category.addEntry(armorBarColor);
+
+        absorptionBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.absorption_bar_color"), Settings.absorptionBarColor)
+                .setDefaultValue(0x007FFF)
+                .setSaveConsumer(newValue -> Settings.absorptionBarColor = newValue)
+                .build();
+        category.addEntry(absorptionBarColor);
 
         breathBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.breath_bar_color"), Settings.breathBarColor)
                 .setDefaultValue(0xA1CAF1)

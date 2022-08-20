@@ -1,17 +1,23 @@
 package net.anakusenko.anakus_status_bars.screen.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.anakusenko.anakus_status_bars.screen.hud.custom.HealthBarElement;
-import net.anakusenko.anakus_status_bars.screen.hud.custom.HungerBarElement;
+import net.anakusenko.anakus_status_bars.screen.hud.custom.*;
 import net.anakusenko.anakus_status_bars.utils.ColorUtils;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
 import net.anakusenko.anakus_status_bars.utils.TextureUtils;
+import net.anakusenko.anakus_status_bars.utils.interfaces.HudElements;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import static net.anakusenko.anakus_status_bars.utils.ModUtils.hudElementsList;
+
 @Environment(EnvType.CLIENT)
 public class RenderHudElements implements HudRenderCallback {
     private static int posXLeft;
@@ -19,11 +25,20 @@ public class RenderHudElements implements HudRenderCallback {
     private static int posY;
     private static MatrixStack hudMatrix;
 
+
+
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         hudInit(matrixStack);
-        HealthBarElement.drawHealthBar();
-        HungerBarElement.drawHungerBar();
+
+        Supplier<Stream<HudElements>> supplier = () -> hudElementsList.stream().filter(HudElements::shouldRender);
+        supplier.get().forEach(hudElements -> {
+            hudElements.renderBar();
+            ModUtils.incrementBars(hudElements.getSide(), -10);
+        });
+
+        ModUtils.resetIncrements();
+
     }
 
     private static void hudInit(MatrixStack matrixStack) {

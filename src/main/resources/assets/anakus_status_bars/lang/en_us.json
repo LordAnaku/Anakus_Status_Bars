@@ -7,6 +7,7 @@
   "option.anakus_status_bars.enable_saturation_bar": "Enable Saturation Bar",
   "option.anakus_status_bars.enable_exhaustion_bar": "Enable Exhaustion Bar",
   "option.anakus_status_bars.enable_armor_bar": "Enable Armor Bar",
+  "option.anakus_status_bars.enable_absorption_bar": "Enable Absorption Bar",
   "option.anakus_status_bars.enable_breath_bar": "Enable Breath Bar",
   "option.anakus_status_bars.enable_mount_bar": "Enable Mount Bar",
 
@@ -20,6 +21,7 @@
   "option.anakus_status_bars.exhaustion_bar_alpha": "Exhaustion Bar Alpha",
   "option.anakus_status_bars.exhaustion_bar_alpha_tooltip": "The alpha of the exhaustion bar. 0 is fully transparent, 1 is fully opaque.",
   "option.anakus_status_bars.armor_bar_color": "Armor Bar Color",
+  "option.anakus_status_bars.absorption_bar_color": "Absorption Bar Color",
   "option.anakus_status_bars.breath_bar_color": "Breath Bar Color",
   "option.anakus_status_bars.mount_bar_color": "Mount Bar Color"
 }
