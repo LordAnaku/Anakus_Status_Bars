@@ -1,7 +1,6 @@
 package net.anakusenko.anakus_status_bars.screen.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.anakusenko.anakus_status_bars.screen.hud.custom.*;
 import net.anakusenko.anakus_status_bars.utils.ColorUtils;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
 import net.anakusenko.anakus_status_bars.utils.TextureUtils;
@@ -10,6 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -39,6 +39,12 @@ public class RenderHudElements implements HudRenderCallback {
 
         ModUtils.resetIncrements();
 
+        supplier.get().forEach(hudElements -> {
+            if(hudElements.shouldRenderIcon()) { hudElements.renderIcon(); }
+            ModUtils.incrementBars(hudElements.getSide(), -10);
+        });
+
+        ModUtils.resetIncrements();
     }
 
     private static void hudInit(MatrixStack matrixStack) {
@@ -108,6 +114,24 @@ public class RenderHudElements implements HudRenderCallback {
                     posXRight, posY + posYMod,
                     TextureUtils.DEFAULT_BAR.getStartX(), TextureUtils.DEFAULT_BAR.getStartY(),
                     TextureUtils.DEFAULT_BAR.getWidth(), TextureUtils.DEFAULT_BAR.getHeight(),
+                    256, 256);
+        }
+    }
+
+    public static void drawIcon(boolean side, int posYMod, TextureUtils textureUtils) {
+        RenderSystem.setShaderTexture(0, Screen.GUI_ICONS_TEXTURE);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        if (side) {
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXLeft-10, posY + posYMod,
+                    textureUtils.getStartX(), textureUtils.getStartY(),
+                    textureUtils.getWidth(), textureUtils.getHeight(),
+                    256, 256);
+        } else {
+            DrawableHelper.drawTexture(hudMatrix,
+                    posXRight+82, posY + posYMod,
+                    textureUtils.getStartX(), textureUtils.getStartY(),
+                    textureUtils.getWidth(), textureUtils.getHeight(),
                     256, 256);
         }
     }

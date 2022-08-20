@@ -18,35 +18,35 @@ public class HealthHudElement implements HudElements {
         getHealthPercent();
 
         assert ModUtils.getPlayer() != null;
-        int posYMod;
-        if (getSide()) {
-            posYMod = ModUtils.leftSideIncrement;
-        } else {
-            posYMod = ModUtils.rightSideIncrement;
-        }
         if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.POISON)) {
-            RenderHudElements.drawStatusEffectBar(getSide(), posYMod, Settings.healthPoisonColor, 1);
+            RenderHudElements.drawStatusEffectBar(getSide(), ModUtils.getPosYMod(getSide()), Settings.healthPoisonColor, 1);
         } else if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.WITHER)) {
-            RenderHudElements.drawStatusEffectBar(getSide(), posYMod, Settings.healthWitherColor, 1);
+            RenderHudElements.drawStatusEffectBar(getSide(), ModUtils.getPosYMod(getSide()), Settings.healthWitherColor, 1);
         } else {
-            RenderHudElements.drawDefaultBar(getSide(), posYMod);
+            RenderHudElements.drawDefaultBar(getSide(), ModUtils.getPosYMod(getSide()));
         }
-        RenderHudElements.drawProgressBar(getSide(), posYMod, progress, Settings.healthBarColor, 1);
+        RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), progress, Settings.healthBarColor, 1);
 
         if (Settings.enableAbsorptionBar) {
             getAbsorptionPercent();
-            RenderHudElements.drawProgressBar(getSide(), posYMod, aProgress, Settings.absorptionBarColor, 1);
+            RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), aProgress, Settings.absorptionBarColor, 1);
         }
-    }
-
-    @Override
-    public void renderText() {
-
     }
 
     @Override
     public void renderIcon() {
+        RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HEART_OUTLINE_ICON);
 
+        assert ModUtils.getPlayer() != null;
+        if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.POISON)) {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HEART_POISON_ICON);
+        } else if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.WITHER)) {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HEART_WITHER_ICON);
+        } else if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.ABSORPTION)) {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HEART_GOLD_ICON);
+        } else {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HEART_ICON);
+        }
     }
 
     @Override
@@ -66,13 +66,8 @@ public class HealthHudElement implements HudElements {
     }
 
     @Override
-    public boolean shouldRenderText() {
-        return false;
-    }
-
-    @Override
     public boolean shouldRenderIcon() {
-        return false;
+        return shouldRender() && Settings.enableHealthIcon;
     }
 
     @Override

@@ -12,12 +12,14 @@ public class ClientSyncHandler
 		ClientPlayNetworking.registerGlobalReceiver(SyncHandler.EXHAUSTION_SYNC, (client, handler, buf, responseSender) -> {
 			float exhaustion = buf.readFloat();
 			client.execute(() -> {
+				assert client.player != null;
 				client.player.getHungerManager().setExhaustion(exhaustion);
 			});
 		});
 		ClientPlayNetworking.registerGlobalReceiver(SyncHandler.SATURATION_SYNC, (client, handler, buf, responseSender) -> {
 			float saturation = buf.readFloat();
 			client.execute(() -> {
+				assert client.player != null;
 				client.player.getHungerManager().setSaturationLevel(saturation);
 			});
 		});

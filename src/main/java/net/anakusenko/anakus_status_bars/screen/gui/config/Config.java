@@ -15,8 +15,11 @@ public class Config {
 
         ConfigCategory mainCategory = builder.getOrCreateCategory(Text.translatable("category.anakus_status_bars.general"));
         ConfigCategory colorCategory = builder.getOrCreateCategory(Text.translatable("category.anakus_status_bars.color"));
+        ConfigCategory iconCategory = builder.getOrCreateCategory(Text.translatable("category.anakus_status_bars.icon"));
+
         ConfigValues.buildMain(mainCategory, builder.entryBuilder());
         ConfigValues.buildColors(colorCategory, builder.entryBuilder());
+        ConfigValues.buildIcons(iconCategory, builder.entryBuilder());
 
         return builder.build();
     }

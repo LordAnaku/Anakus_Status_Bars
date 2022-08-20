@@ -13,27 +13,14 @@ public class ArmorBarElement implements HudElements {
     @Override
     public void renderBar() {
         assert ModUtils.getPlayer() != null;
-        if (Settings.enableArmorBar && ModUtils.getPlayer().getArmor() > 0) {
-            getArmorPercent();
-            int posYMod;
-            if (getSide()) {
-                posYMod = ModUtils.leftSideIncrement;
-            } else {
-                posYMod = ModUtils.rightSideIncrement;
-            }
-            RenderHudElements.drawDefaultBar(getSide(), posYMod);
-            RenderHudElements.drawProgressBar(getSide(), posYMod, progress, Settings.armorBarColor, 1);
-        }
-    }
-
-    @Override
-    public void renderText() {
-
+        getArmorPercent();
+        RenderHudElements.drawDefaultBar(getSide(), ModUtils.getPosYMod(getSide()));
+        RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), progress, Settings.armorBarColor, 1);
     }
 
     @Override
     public void renderIcon() {
-
+        RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.ARMOR_ICON);
     }
 
     @Override
@@ -54,13 +41,8 @@ public class ArmorBarElement implements HudElements {
     }
 
     @Override
-    public boolean shouldRenderText() {
-        return false;
-    }
-
-    @Override
     public boolean shouldRenderIcon() {
-        return false;
+        return shouldRender() && Settings.enableArmorIcon;
     }
 
     @Override

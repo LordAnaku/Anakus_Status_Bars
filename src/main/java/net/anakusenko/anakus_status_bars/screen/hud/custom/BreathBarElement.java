@@ -13,28 +13,21 @@ public class BreathBarElement implements HudElements {
     @Override
     public void renderBar() {
         getBreathPercent();
-        int posYMod;
-        if (getSide()) {
-            posYMod = ModUtils.leftSideIncrement;
-        } else {
-            posYMod = ModUtils.rightSideIncrement;
-        }
         if (progress <= 0) {
-            RenderHudElements.drawStatusEffectBar(getSide(), posYMod, Settings.hungerEffectColor, 1);
+            RenderHudElements.drawStatusEffectBar(getSide(), ModUtils.getPosYMod(getSide()), Settings.hurtBarColor, 1);
         } else {
-            RenderHudElements.drawDefaultBar(getSide(), posYMod);
+            RenderHudElements.drawDefaultBar(getSide(), ModUtils.getPosYMod(getSide()));
         }
-        RenderHudElements.drawProgressBar(getSide(), posYMod, progress, Settings.breathBarColor, 1);
-    }
-
-    @Override
-    public void renderText() {
-
+        RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), progress, Settings.breathBarColor, 1);
     }
 
     @Override
     public void renderIcon() {
-
+        if (progress <= 0) {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.BUBBLE_BURST_ICON);
+        } else {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.BUBBLE_ICON);
+        }
     }
 
     @Override
@@ -55,13 +48,8 @@ public class BreathBarElement implements HudElements {
     }
 
     @Override
-    public boolean shouldRenderText() {
-        return false;
-    }
-
-    @Override
     public boolean shouldRenderIcon() {
-        return false;
+        return shouldRender() && Settings.enableBreathIcon;
     }
 
     @Override

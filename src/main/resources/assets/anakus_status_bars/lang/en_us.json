@@ -1,5 +1,5 @@
 {
-  "title.anakus_status_bars.config": "Anaku Status Bars",
+  "title.anakus_status_bars.config": "Anaku's Status Bars",
 
   "category.anakus_status_bars.general": "General",
   "option.anakus_status_bars.enable_health_bar": "Enable Health Bar",
@@ -10,11 +10,14 @@
   "option.anakus_status_bars.enable_absorption_bar": "Enable Absorption Bar",
   "option.anakus_status_bars.enable_breath_bar": "Enable Breath Bar",
   "option.anakus_status_bars.enable_mount_bar": "Enable Mount Bar",
+  "option.anakus_status_bars.left_order": "These bars will be displayed on the left",
+  "option.anakus_status_bars.right_order": "These bars will be displayed on the right",
 
   "category.anakus_status_bars.color": "Colors",
   "option.anakus_status_bars.health_bar_color": "Health Bar Color",
   "option.anakus_status_bars.health_poison_color": "Health Poison Bar Color",
   "option.anakus_status_bars.health_wither_color": "Health Wither Bar Color",
+  "option.anakus_status_bars.hurt_bar_color": "Damage Bar Color",
   "option.anakus_status_bars.hunger_bar_color": "Hunger Bar Color",
   "option.anakus_status_bars.hunger_effect_color": "Hunger Effect Bar Color",
   "option.anakus_status_bars.saturation_bar_color": "Saturation Bar Color",
@@ -23,5 +26,12 @@
   "option.anakus_status_bars.armor_bar_color": "Armor Bar Color",
   "option.anakus_status_bars.absorption_bar_color": "Absorption Bar Color",
   "option.anakus_status_bars.breath_bar_color": "Breath Bar Color",
-  "option.anakus_status_bars.mount_bar_color": "Mount Bar Color"
+  "option.anakus_status_bars.mount_bar_color": "Mount Bar Color",
+
+  "category.anakus_status_bars.icon": "Icons",
+  "option.anakus_status_bars.enable_health_icon": "Enable Health Icon",
+  "option.anakus_status_bars.enable_hunger_icon": "Enable Hunger Icon",
+  "option.anakus_status_bars.enable_armor_icon": "Enable Armor Icon",
+  "option.anakus_status_bars.enable_breath_icon": "Enable Breath Icon",
+  "option.anakus_status_bars.enable_mount_icon": "Enable Mount Icon"
 }

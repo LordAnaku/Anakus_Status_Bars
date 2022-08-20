@@ -1,7 +1,6 @@
 package net.anakusenko.anakus_status_bars.screen.gui.config;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.anakusenko.anakus_status_bars.utils.LogHelper;

@@ -2,7 +2,6 @@ package net.anakusenko.anakus_status_bars.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import net.anakusenko.anakus_status_bars.screen.hud.RenderHudElements;
 import net.anakusenko.anakus_status_bars.utils.interfaces.HudElements;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,8 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.*;
 
@@ -24,7 +22,6 @@ import static net.anakusenko.anakus_status_bars.screen.gui.config.Settings.right
 public class ModUtils {
 
     public static final String MOD_ID = "anakus_status_bars";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final Identifier STATUS_BAR_TEXTURE = new Identifier(MOD_ID, "textures/gui/status_bar.png");
 
     public final static boolean leftSide = true;
@@ -77,6 +74,7 @@ public class ModUtils {
         Arrays.stream(hudElements).forEach(hudElement -> registry.put(hudElement.name(), hudElement));
     }
 
+    @SuppressWarnings("unused")
     public static void registerModHudElements(HudElements hudElements) {
         registry.put(hudElements.name(), hudElements);
     }
@@ -108,12 +106,14 @@ public class ModUtils {
         rightSideIncrement = -40;
     }
 
+    @SuppressWarnings("unused")
     public static void sendMessage(String message) {
         if(getPlayer() != null) {
             getPlayer().sendMessage(Text.of(message));
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public static JsonArray getJsonArray(List list) {
         JsonArray jsonArray = new JsonArray();
         for(Object object : list) {
@@ -128,5 +128,13 @@ public class ModUtils {
             list.add(element.getAsString());
         }
         return list;
+    }
+
+    public static int getPosYMod(boolean side) {
+        if(side) {
+            return leftSideIncrement;
+        } else {
+            return rightSideIncrement;
+        }
     }
 }

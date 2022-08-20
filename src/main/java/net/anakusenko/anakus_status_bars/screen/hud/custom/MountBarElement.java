@@ -13,24 +13,14 @@ public class MountBarElement implements HudElements {
     @Override
     public void renderBar() {
         getMountPercent();
-        int posYMod;
-        if (getSide()) {
-            posYMod = ModUtils.leftSideIncrement;
-        } else {
-            posYMod = ModUtils.rightSideIncrement;
-        }
-        RenderHudElements.drawDefaultBar(getSide(), posYMod);
-        RenderHudElements.drawProgressBar(getSide(), posYMod, progress, Settings.mountBarColor, 1);
-    }
-
-    @Override
-    public void renderText() {
-
+        RenderHudElements.drawDefaultBar(getSide(), ModUtils.getPosYMod(getSide()));
+        RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), progress, Settings.mountBarColor, 1);
     }
 
     @Override
     public void renderIcon() {
-
+        RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HEART_OUTLINE_ICON);
+        RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HEART_MOUNT_ICON);
     }
 
     @Override
@@ -50,13 +40,8 @@ public class MountBarElement implements HudElements {
     }
 
     @Override
-    public boolean shouldRenderText() {
-        return false;
-    }
-
-    @Override
     public boolean shouldRenderIcon() {
-        return false;
+        return shouldRender() && Settings.enableMountIcon;
     }
 
     @Override

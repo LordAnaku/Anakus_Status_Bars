@@ -4,15 +4,13 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.*;
 import net.anakusenko.anakus_status_bars.utils.ModUtils;
-import net.anakusenko.anakus_status_bars.utils.interfaces.HudElements;
 import net.minecraft.text.Text;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class ConfigValues {
 
-    /** Main Category */
+    /* * Main Category */
     public static BooleanListEntry enableHealthBar;
     public static BooleanListEntry enableHungerBar;
     public static BooleanListEntry enableSaturationBar;
@@ -25,10 +23,11 @@ public class ConfigValues {
     public static StringListListEntry rightOrder;
 
 
-    /** Color Category */
+    /* * Color Category */
     public static ColorEntry healthBarColor;
     public static ColorEntry healthPoisonColor;
     public static ColorEntry healthWitherColor;
+    public static ColorEntry hurtBarColor;
     public static ColorEntry hungerBarColor;
     public static ColorEntry hungerEffectColor;
     public static ColorEntry saturationBarColor;
@@ -38,7 +37,12 @@ public class ConfigValues {
     public static ColorEntry breathBarColor;
     public static ColorEntry mountBarColor;
 
-
+    /* * Icon Category */
+    public static BooleanListEntry enableHealthIcon;
+    public static BooleanListEntry enableHungerIcon;
+    public static BooleanListEntry enableArmorIcon;
+    public static BooleanListEntry enableBreathIcon;
+    public static BooleanListEntry enableMountIcon;
 
 
 
@@ -107,37 +111,43 @@ public class ConfigValues {
 
     public static void buildColors(ConfigCategory category, ConfigEntryBuilder builder) {
         healthBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.health_bar_color"), Settings.healthBarColor)
-                .setDefaultValue(0xDC1432)
+                .setDefaultValue(0xff1313)
                 .setSaveConsumer(newValue -> Settings.healthBarColor = newValue)
                 .build();
         category.addEntry(healthBarColor);
 
         healthPoisonColor = builder.startColorField(Text.translatable("option.anakus_status_bars.health_poison_color"), Settings.healthPoisonColor)
-                .setDefaultValue(0x228B22)
+                .setDefaultValue(0x8b8712)
                 .setSaveConsumer(newValue -> Settings.healthPoisonColor = newValue)
                 .build();
         category.addEntry(healthPoisonColor);
 
         healthWitherColor = builder.startColorField(Text.translatable("option.anakus_status_bars.health_wither_color"), Settings.healthWitherColor)
-                .setDefaultValue(0x36454F)
+                .setDefaultValue(0x2b2b2b)
                 .setSaveConsumer(newValue -> Settings.healthWitherColor = newValue)
                 .build();
         category.addEntry(healthWitherColor);
 
+        hurtBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.hurt_bar_color"), Settings.hurtBarColor)
+                .setDefaultValue(0x550000)
+                .setSaveConsumer(newValue -> Settings.hurtBarColor = newValue)
+                .build();
+        category.addEntry(hurtBarColor);
+
         hungerBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.hunger_bar_color"), Settings.hungerBarColor)
-                .setDefaultValue(0xD2691E)
+                .setDefaultValue(0x9d6d43)
                 .setSaveConsumer(newValue -> Settings.hungerBarColor = newValue)
                 .build();
         category.addEntry(hungerBarColor);
 
         hungerEffectColor = builder.startColorField(Text.translatable("option.anakus_status_bars.hunger_effect_color"), Settings.hungerEffectColor)
-                .setDefaultValue(0x550000)
+                .setDefaultValue(0x5f6d43)
                 .setSaveConsumer(newValue -> Settings.hungerEffectColor = newValue)
                 .build();
         category.addEntry(hungerEffectColor);
 
         saturationBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.saturation_bar_color"), Settings.saturationBarColor)
-                .setDefaultValue(0xFFF600)
+                .setDefaultValue(0xd42a2a)
                 .setSaveConsumer(newValue -> Settings.saturationBarColor = newValue)
                 .build();
         category.addEntry(saturationBarColor);
@@ -152,27 +162,59 @@ public class ConfigValues {
         category.addEntry(exhaustionBarAlpha);
 
         armorBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.armor_bar_color"), Settings.armorBarColor)
-                .setDefaultValue(0xB2BEB5)
+                .setDefaultValue(0xb8b9c4)
                 .setSaveConsumer(newValue -> Settings.armorBarColor = newValue)
                 .build();
         category.addEntry(armorBarColor);
 
         absorptionBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.absorption_bar_color"), Settings.absorptionBarColor)
-                .setDefaultValue(0x007FFF)
+                .setDefaultValue(0xd4af37)
                 .setSaveConsumer(newValue -> Settings.absorptionBarColor = newValue)
                 .build();
         category.addEntry(absorptionBarColor);
 
         breathBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.breath_bar_color"), Settings.breathBarColor)
-                .setDefaultValue(0xA1CAF1)
+                .setDefaultValue(0x0094ff)
                 .setSaveConsumer(newValue -> Settings.breathBarColor = newValue)
                 .build();
         category.addEntry(breathBarColor);
 
         mountBarColor = builder.startColorField(Text.translatable("option.anakus_status_bars.mount_bar_color"), Settings.mountBarColor)
-                .setDefaultValue(0x54626F)
+                .setDefaultValue(0xda662c)
                 .setSaveConsumer(newValue -> Settings.mountBarColor = newValue)
                 .build();
         category.addEntry(mountBarColor);
+    }
+
+    public static void buildIcons(ConfigCategory iconCategory, ConfigEntryBuilder entryBuilder) {
+        enableHealthIcon = entryBuilder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_health_icon"), Settings.enableHealthIcon)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> Settings.enableHealthIcon = newValue)
+                .build();
+        iconCategory.addEntry(enableHealthIcon);
+
+        enableHungerIcon = entryBuilder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_hunger_icon"), Settings.enableHungerIcon)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> Settings.enableHungerIcon = newValue)
+                .build();
+        iconCategory.addEntry(enableHungerIcon);
+
+        enableArmorIcon = entryBuilder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_armor_icon"), Settings.enableArmorIcon)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> Settings.enableArmorIcon = newValue)
+                .build();
+        iconCategory.addEntry(enableArmorIcon);
+
+        enableBreathIcon = entryBuilder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_breath_icon"), Settings.enableBreathIcon)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> Settings.enableBreathIcon = newValue)
+                .build();
+        iconCategory.addEntry(enableBreathIcon);
+
+        enableMountIcon = entryBuilder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_mount_icon"), Settings.enableMountIcon)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> Settings.enableMountIcon = newValue)
+                .build();
+        iconCategory.addEntry(enableMountIcon);
     }
 }

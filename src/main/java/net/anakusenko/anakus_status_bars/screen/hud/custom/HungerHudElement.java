@@ -17,40 +17,36 @@ public class HungerHudElement implements HudElements {
     @Override
     public void renderBar() {
         assert ModUtils.getPlayer() != null;
-        int posYMod;
-        if (getSide()) {
-            posYMod = ModUtils.leftSideIncrement;
-        } else {
-            posYMod = ModUtils.rightSideIncrement;
-        }
         if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
-            RenderHudElements.drawStatusEffectBar(getSide(), posYMod, Settings.hungerEffectColor, 1);
+            RenderHudElements.drawStatusEffectBar(getSide(), ModUtils.getPosYMod(getSide()), Settings.hungerEffectColor, 1);
         } else {
-            RenderHudElements.drawDefaultBar(getSide(), posYMod);
+            RenderHudElements.drawDefaultBar(getSide(), ModUtils.getPosYMod(getSide()));
         }
 
         getHunger();
-        RenderHudElements.drawProgressBar(getSide(), posYMod, currentHunger, Settings.hungerBarColor, 1);
+        RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), currentHunger, Settings.hungerBarColor, 1);
 
         if (Settings.enableSaturationBar) {
             getSaturation();
-            RenderHudElements.drawProgressBar(getSide(), posYMod, currentSaturation, Settings.saturationBarColor, 1);
+            RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), currentSaturation, Settings.saturationBarColor, 1);
         }
 
         if (Settings.enableExhaustionBar) {
             getExhaust();
-            RenderHudElements.drawExhaustBar(getSide(), posYMod, currentExhaust, Settings.exhaustionBarAlpha);
+            RenderHudElements.drawExhaustBar(getSide(), ModUtils.getPosYMod(getSide()), currentExhaust, Settings.exhaustionBarAlpha);
         }
     }
 
     @Override
-    public void renderText() {
-
-    }
-
-    @Override
     public void renderIcon() {
+        RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_OUTLINE_ICON);
 
+        assert ModUtils.getPlayer() != null;
+        if(ModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_EFFECT_ICON);
+        } else {
+            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_ICON);
+        }
     }
 
     @Override
@@ -70,13 +66,8 @@ public class HungerHudElement implements HudElements {
     }
 
     @Override
-    public boolean shouldRenderText() {
-        return false;
-    }
-
-    @Override
     public boolean shouldRenderIcon() {
-        return false;
+        return shouldRender() && Settings.enableHungerIcon;
     }
 
     @Override
