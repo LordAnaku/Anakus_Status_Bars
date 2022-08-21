@@ -4,11 +4,11 @@
   "package": "net.anakusenko.anakus_status_bars.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ServerPlayerEntityMixin",
-    "PlayerManagerMixin"
+    "io.github.lordanaku.anakus_status_bars.mixin.ServerPlayerEntityMixin",
+    "io.github.lordanaku.anakus_status_bars.mixin.PlayerManagerMixin"
   ],
   "client": [
-    "RenderOverlayMixin"
+    "io.github.lordanaku.anakus_status_bars.mixin.RenderOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1
