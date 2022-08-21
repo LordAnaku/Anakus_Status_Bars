@@ -1,14 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.anakusenko.anakus_status_bars.mixin",
+  "package": "io.github.lordanaku.anakus_status_bars.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "io.github.lordanaku.anakus_status_bars.mixin.ServerPlayerEntityMixin",
-    "io.github.lordanaku.anakus_status_bars.mixin.PlayerManagerMixin"
+    "ServerPlayerEntityMixin",
+    "PlayerManagerMixin"
   ],
   "client": [
-    "io.github.lordanaku.anakus_status_bars.mixin.RenderOverlayMixin"
+    "RenderOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1
