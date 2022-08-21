@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
+	id 'signing'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -56,6 +57,7 @@ java {
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this line, sources will not be generated.
+	withJavadocJar()
 	withSourcesJar()
 }
 
@@ -69,19 +71,62 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			groupId = project.maven_group
-			artifactId = project.archives_base_name
-			version = project.mod_version
-
+			groupId = "io.github.lordanaku"
+			artifactId = "anaku_status_bars"
+			version = "1.0.1-1.19.2"
 			from components.java
+
+			pom {
+				name = project.archives_base_name
+				description = "This mod replaced the default status bars with a more modern look, as well as acts as a base for several of my other mods."
+				url = "https://github.com/LordAnaku/Anakus_Status_Bars"
+				inceptionYear = "2022"
+
+				licenses {
+					license {
+						name = "GPL-3.0"
+						url = "https://opensource.org/licenses/GPL-3.0"
+					}
+				}
+				developers {
+					developer {
+						id = "lordanaku"
+						name = "LordAnaku"
+						email = "the.iron.legion.modding@gmail.com"
+					}
+				}
+				scm {
+					connection = "scm:git:git:github.com/LordAnaku/Anakus_Status_Bars.git"
+					developerConnection = "scm:git:ssh:github.com/LordAnaku/Anakus_Status_Bars.git"
+					url = "https://github.com/LordAnaku/Anakus_Status_Bars"
+				}
+			}
 		}
 	}
 
 	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
 		// Add repositories to publish to here.
+		maven {
+			name = "OSSRH"
+			url = mavenUrl
+			credentials {
+				username = ossrhUsername
+				password = ossrhPassword
+			}
+		}
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+	}
+
+	signing {
+		sign publishing.publications.mavenJava
+	}
+
+	javadoc {
+		if(JavaVersion.current().isJava9Compatible()) {
+			options.addBooleanOption('html5', true)
+		}
 	}
 }

@@ -2,9 +2,9 @@ package io.github.lordanaku.anakus_status_bars.screen.hud.custom;
 
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
 import io.github.lordanaku.anakus_status_bars.screen.hud.RenderHudElements;
-import io.github.lordanaku.anakus_status_bars.utils.ModUtils;
+import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
-import io.github.lordanaku.anakus_status_bars.utils.interfaces.HudElements;
+import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
@@ -16,36 +16,36 @@ public class HungerHudElement implements HudElements {
     private final int maxProgress = TextureUtils.PROGRESS_BAR.getWidth();
     @Override
     public void renderBar() {
-        assert ModUtils.getPlayer() != null;
-        if (ModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
-            RenderHudElements.drawStatusEffectBar(getSide(), ModUtils.getPosYMod(getSide()), Settings.hungerEffectColor, 1);
+        assert ASBModUtils.getPlayer() != null;
+        if (ASBModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
+            RenderHudElements.drawStatusEffectBar(getSide(), ASBModUtils.getPosYMod(getSide()), Settings.colorSettings.get("color_hunger_effect"));
         } else {
-            RenderHudElements.drawDefaultBar(getSide(), ModUtils.getPosYMod(getSide()));
+            RenderHudElements.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()));
         }
 
         getHunger();
-        RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), currentHunger, Settings.hungerBarColor, 1);
+        RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), currentHunger, Settings.colorSettings.get("color_hunger"), 1);
 
-        if (Settings.enableSaturationBar) {
+        if (Settings.shouldRenderSettings.get("saturation")) {
             getSaturation();
-            RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), currentSaturation, Settings.saturationBarColor, 1);
+            RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), currentSaturation, Settings.colorSettings.get("color_saturation"), 1);
         }
 
-        if (Settings.enableExhaustionBar) {
+        if (Settings.shouldRenderSettings.get("exhaustion")) {
             getExhaust();
-            RenderHudElements.drawExhaustBar(getSide(), ModUtils.getPosYMod(getSide()), currentExhaust, Settings.exhaustionBarAlpha);
+            RenderHudElements.drawExhaustBar(getSide(), ASBModUtils.getPosYMod(getSide()), currentExhaust, Settings.alphaSettings.get("alpha_exhaustion"));
         }
     }
 
     @Override
     public void renderIcon() {
-        RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_OUTLINE_ICON);
+        RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_OUTLINE_ICON);
 
-        assert ModUtils.getPlayer() != null;
-        if(ModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
-            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_EFFECT_ICON);
+        assert ASBModUtils.getPlayer() != null;
+        if(ASBModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
+            RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_EFFECT_ICON);
         } else {
-            RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_ICON);
+            RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_ICON);
         }
     }
 
@@ -62,12 +62,12 @@ public class HungerHudElement implements HudElements {
 
     @Override
     public boolean shouldRender() {
-        return Settings.enableHungerBar;
+        return Settings.shouldRenderSettings.get("hunger");
     }
 
     @Override
     public boolean shouldRenderIcon() {
-        return shouldRender() && Settings.enableHungerIcon;
+        return shouldRender() && Settings.iconSettings.get("icon_hunger");
     }
 
     @Override
@@ -76,22 +76,22 @@ public class HungerHudElement implements HudElements {
     }
 
     private void getHunger() {
-        assert ModUtils.getPlayer() != null;
-        int cFoodLevel = ModUtils.getPlayer().getHungerManager().getFoodLevel();
+        assert ASBModUtils.getPlayer() != null;
+        int cFoodLevel = ASBModUtils.getPlayer().getHungerManager().getFoodLevel();
         float ratio = Math.min(1, Math.max(0, cFoodLevel / 20f));
         currentHunger = Math.min(maxProgress, MathHelper.ceil(ratio*maxProgress) + 2);
     }
 
     private void getSaturation() {
-        assert ModUtils.getPlayer() != null;
-        float cSatLevel = ModUtils.getPlayer().getHungerManager().getSaturationLevel();
+        assert ASBModUtils.getPlayer() != null;
+        float cSatLevel = ASBModUtils.getPlayer().getHungerManager().getSaturationLevel();
         float ratio = Math.min(1, Math.max(0, cSatLevel / 20f));
         currentSaturation = Math.min(maxProgress, MathHelper.ceil(ratio*maxProgress) + 2);
     }
 
     private void getExhaust() {
-        assert ModUtils.getPlayer() != null;
-        float cExhLevel = ModUtils.getPlayer().getHungerManager().getExhaustion();
+        assert ASBModUtils.getPlayer() != null;
+        float cExhLevel = ASBModUtils.getPlayer().getHungerManager().getExhaustion();
         float maxExhaust = 4f;
         float ratio = Math.min(1, Math.max(0, cExhLevel / maxExhaust));
         currentExhaust = Math.min(maxProgress, MathHelper.ceil(ratio*maxProgress));

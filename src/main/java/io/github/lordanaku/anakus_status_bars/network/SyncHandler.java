@@ -1,6 +1,6 @@
 package io.github.lordanaku.anakus_status_bars.network;
 
-import io.github.lordanaku.anakus_status_bars.utils.ModUtils;
+import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
@@ -13,8 +13,8 @@ import java.util.UUID;
 
 public class SyncHandler
 {
-	public static final Identifier EXHAUSTION_SYNC = new Identifier(ModUtils.MOD_ID, "exhaustion_sync");
-	public static final Identifier SATURATION_SYNC = new Identifier(ModUtils.MOD_ID, "saturation_sync");
+	public static final Identifier EXHAUSTION_SYNC = new Identifier(ASBModUtils.MOD_ID, "exhaustion_sync");
+	public static final Identifier SATURATION_SYNC = new Identifier(ASBModUtils.MOD_ID, "saturation_sync");
 
 	private static CustomPayloadS2CPacket makeSyncPacket(Identifier identifier, float val)
 	{

@@ -1,10 +1,10 @@
 package io.github.lordanaku.anakus_status_bars.screen.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.lordanaku.anakus_status_bars.utils.ModUtils;
+import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 import io.github.lordanaku.anakus_status_bars.utils.ColorUtils;
 import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
-import io.github.lordanaku.anakus_status_bars.utils.interfaces.HudElements;
+import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -29,30 +29,30 @@ public class RenderHudElements implements HudRenderCallback {
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         hudInit(matrixStack);
 
-        Supplier<Stream<HudElements>> supplier = () -> ModUtils.hudElementsList.stream().filter(HudElements::shouldRender);
+        Supplier<Stream<HudElements>> supplier = () -> ASBModUtils.hudElementsList.stream().filter(HudElements::shouldRender);
         supplier.get().forEach(hudElements -> {
             hudElements.renderBar();
-            ModUtils.incrementBars(hudElements.getSide(), -10);
+            ASBModUtils.incrementBars(hudElements.getSide(), -10);
         });
 
-        ModUtils.resetIncrements();
+        ASBModUtils.resetIncrements();
 
         supplier.get().forEach(hudElements -> {
             if(hudElements.shouldRenderIcon()) { hudElements.renderIcon(); }
-            ModUtils.incrementBars(hudElements.getSide(), -10);
+            ASBModUtils.incrementBars(hudElements.getSide(), -10);
         });
 
-        ModUtils.resetIncrements();
+        ASBModUtils.resetIncrements();
     }
 
     private static void hudInit(MatrixStack matrixStack) {
-        if (ModUtils.getClient() != null) {
-            posXLeft = (ModUtils.getScaledWindowWidth() / 2) - 91;
-            posXRight = (ModUtils.getScaledWindowWidth() / 2) + 10;
-            posY = ModUtils.getScaledWindowHeight();
+        if (ASBModUtils.getClient() != null) {
+            posXLeft = (ASBModUtils.getScaledWindowWidth() / 2) - 91;
+            posXRight = (ASBModUtils.getScaledWindowWidth() / 2) + 10;
+            posY = ASBModUtils.getScaledWindowHeight();
 
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, ModUtils.STATUS_BAR_TEXTURE);
+            RenderSystem.setShaderTexture(0, ASBModUtils.STATUS_BAR_TEXTURE);
         }
         if (matrixStack != null) {
             hudMatrix = matrixStack;
@@ -62,7 +62,10 @@ public class RenderHudElements implements HudRenderCallback {
     public static void drawDefaultBar(boolean leftSide, int posYMod) {
         int side = (leftSide) ? posXLeft : posXRight;
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        DrawableHelper.drawTexture(hudMatrix, side, posY + posYMod, TextureUtils.DEFAULT_BAR.getStartX(), TextureUtils.DEFAULT_BAR.getStartY(), TextureUtils.DEFAULT_BAR.getWidth(), TextureUtils.DEFAULT_BAR.getHeight(), 256,256);
+        DrawableHelper.drawTexture(hudMatrix, side, posY + posYMod,
+                TextureUtils.DEFAULT_BAR.getStartX(), TextureUtils.DEFAULT_BAR.getStartY(),
+                TextureUtils.DEFAULT_BAR.getWidth(), TextureUtils.DEFAULT_BAR.getHeight(),
+                256,256);
     }
 
     public static void drawExhaustBar(boolean leftSide, int posYMod, int progress, float alpha) {
@@ -99,8 +102,8 @@ public class RenderHudElements implements HudRenderCallback {
         }
     }
 
-    public static void drawStatusEffectBar(boolean leftSide, int posYMod, int color, float alpha) {
-        RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), alpha);
+    public static void drawStatusEffectBar(boolean leftSide, int posYMod, int color) {
+        RenderSystem.setShaderColor(ColorUtils.fromHex(color).getRedF(), ColorUtils.fromHex(color).getGreenF(), ColorUtils.fromHex(color).getBlueF(), 1);
         if (leftSide) {
             DrawableHelper.drawTexture(hudMatrix,
                     posXLeft, posY + posYMod,

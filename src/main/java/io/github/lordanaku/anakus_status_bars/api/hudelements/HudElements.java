@@ -1,4 +1,4 @@
-package io.github.lordanaku.anakus_status_bars.utils.interfaces;
+package io.github.lordanaku.anakus_status_bars.api.hudelements;
 
 public interface HudElements {
     void renderBar();

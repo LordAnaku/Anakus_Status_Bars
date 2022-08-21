@@ -1,24 +1,21 @@
 package io.github.lordanaku.anakus_status_bars.screen.gui.config;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import io.github.lordanaku.anakus_status_bars.utils.LogHelper;
-import io.github.lordanaku.anakus_status_bars.utils.ModUtils;
+import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.util.List;
+
+import java.util.Map;
 
 public class ConfigFileHandler {
     public static void readFromConfig() {
         JsonObject root = new JsonObject();
+        Gson gson = new Gson();
         try (FileReader file = new FileReader(getConfigFile())) {
             root = JsonParser.parseReader(file).getAsJsonObject();
         } catch (IOException e) {
@@ -26,43 +23,59 @@ public class ConfigFileHandler {
         }
 
         /* * Load settings * */
-        if (Files.exists(getConfigFile().toPath())) {
-            try {
-                for (Field field : Settings.class.getDeclaredFields()) {
-                    Type fieldType = field.getType();
-                    if (root.has(field.getName())) {
-                        if (boolean.class.equals(fieldType)) {
-                            field.setBoolean(null, root.get(field.getName()).getAsBoolean());
-                        } else if (int.class.equals(fieldType)) {
-                            field.setInt(null, root.get(field.getName()).getAsInt());
-                        } else if (float.class.equals(fieldType)) {
-                            field.setFloat(null, root.get(field.getName()).getAsFloat());
-                        } else if (List.class.equals(fieldType)) {
-                            field.set(null, root.get(field.getName()).getAsJsonArray());
-                        } else if (String.class.equals(fieldType)) {
-                            field.set(null, root.get(field.getName()).getAsString());
-                        }
-                    }
+        try {
+            JsonObject finalRoot = root;
+            if(finalRoot.has("render_settings")) {
+                JsonObject object = finalRoot.get("render_settings").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.shouldRenderSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
                 }
-            } catch (IllegalAccessException e) {
-                LogHelper.error(e.getMessage());
             }
+            if(finalRoot.has("color_settings")) {
+                JsonObject object = finalRoot.get("color_settings").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.colorSettings.replace(entry.getKey(), entry.getValue().getAsInt());
+                }
+            }
+            if(finalRoot.has("alpha_settings")) {
+                JsonObject object = finalRoot.get("alpha_settings").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.alphaSettings.replace(entry.getKey(), entry.getValue().getAsFloat());
+                }
+            }
+            if(finalRoot.has("icon_settings")) {
+                JsonObject object = finalRoot.get("icon_settings").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.iconSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
+                }
+            }
+            if(finalRoot.has("render_side")) {
+                JsonObject object = finalRoot.get("render_side").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.positionSettings.replace(entry.getKey(), ASBModUtils.getStringList(entry.getValue().getAsJsonArray()));
+                }
+            }
+        } catch (Exception e) {
+            LogHelper.error(e.getMessage());
         }
     }
 
     public static void writeToConfig() {
         JsonObject root = new JsonObject();
-
+        Gson gson = new Gson();
         /* * Save settings * */
-        for (Field field : Settings.class.getDeclaredFields()) {
-            try {
-                root.addProperty(field.getName(), field.get(null).toString());
-            } catch (IllegalAccessException e) {
-                LogHelper.error(e.getMessage());
-            }
+
+        try {
+            root.add("render_settings", gson.toJsonTree(Settings.shouldRenderSettings));
+            root.add("color_settings", gson.toJsonTree(Settings.colorSettings));
+            root.add("alpha_settings", gson.toJsonTree(Settings.alphaSettings));
+            root.add("icon_settings", gson.toJsonTree(Settings.iconSettings));
+            root.add("render_side", gson.toJsonTree(Settings.positionSettings));
+        } catch (Exception e) {
+            LogHelper.error(e.getMessage());
         }
 
-        ModUtils.setupHudElements();
+        ASBModUtils.setupHudElements();
 
         try (FileWriter file = new FileWriter(getConfigFile())) {
             file.write(new GsonBuilder().setPrettyPrinting().create().toJson(root));

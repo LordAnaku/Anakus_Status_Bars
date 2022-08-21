@@ -34,10 +34,10 @@ public class LogHelper {
     }
 
     private static void log(Level logLevel, String message, Object... params) {
-        LogManager.getLogger(ModUtils.MOD_ID).log(logLevel, message, params);
+        LogManager.getLogger(ASBModUtils.MOD_ID).log(logLevel, message, params);
     }
 
     private static void log(Level logLevel, String message, Throwable t) {
-        LogManager.getLogger(ModUtils.MOD_ID).log(logLevel, message, t);
+        LogManager.getLogger(ASBModUtils.MOD_ID).log(logLevel, message, t);
     }
 }

@@ -2,9 +2,9 @@ package io.github.lordanaku.anakus_status_bars.screen.hud.custom;
 
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
 import io.github.lordanaku.anakus_status_bars.screen.hud.RenderHudElements;
-import io.github.lordanaku.anakus_status_bars.utils.ModUtils;
+import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
-import io.github.lordanaku.anakus_status_bars.utils.interfaces.HudElements;
+import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
 import net.minecraft.util.math.MathHelper;
 
 public class ArmorBarElement implements HudElements {
@@ -12,15 +12,15 @@ public class ArmorBarElement implements HudElements {
     private int progress;
     @Override
     public void renderBar() {
-        assert ModUtils.getPlayer() != null;
+        assert ASBModUtils.getPlayer() != null;
         getArmorPercent();
-        RenderHudElements.drawDefaultBar(getSide(), ModUtils.getPosYMod(getSide()));
-        RenderHudElements.drawProgressBar(getSide(), ModUtils.getPosYMod(getSide()), progress, Settings.armorBarColor, 1);
+        RenderHudElements.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()));
+        RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), progress, Settings.colorSettings.get("color_armor"), 1);
     }
 
     @Override
     public void renderIcon() {
-        RenderHudElements.drawIcon(getSide(), ModUtils.getPosYMod(getSide()), TextureUtils.ARMOR_ICON);
+        RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.ARMOR_ICON);
     }
 
     @Override
@@ -36,13 +36,13 @@ public class ArmorBarElement implements HudElements {
 
     @Override
     public boolean shouldRender() {
-        assert ModUtils.getPlayer() != null;
-        return Settings.enableArmorBar && ModUtils.getPlayer().getArmor() > 0;
+        assert ASBModUtils.getPlayer() != null;
+        return Settings.shouldRenderSettings.get("armor") && ASBModUtils.getPlayer().getArmor() > 0;
     }
 
     @Override
     public boolean shouldRenderIcon() {
-        return shouldRender() && Settings.enableArmorIcon;
+        return shouldRender() && Settings.iconSettings.get("icon_armor");
     }
 
     @Override
@@ -51,8 +51,8 @@ public class ArmorBarElement implements HudElements {
     }
 
     private void getArmorPercent() {
-        assert ModUtils.getPlayer() != null;
-        float armor = ModUtils.getPlayer().getArmor();
+        assert ASBModUtils.getPlayer() != null;
+        float armor = ASBModUtils.getPlayer().getArmor();
         float armorMax = 20;
         int maxProgress = TextureUtils.PROGRESS_BAR.getWidth();
         progress = Math.min(maxProgress, MathHelper.ceil(armor / armorMax * maxProgress) + 2);
