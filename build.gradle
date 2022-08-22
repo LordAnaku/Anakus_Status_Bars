@@ -71,9 +71,9 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			groupId = "io.github.lordanaku"
-			artifactId = "anaku_status_bars"
-			version = "1.0.1-1.19.2"
+			groupId = group
+			artifactId = archivesBaseName
+			version = version
 			from components.java
 
 			pom {

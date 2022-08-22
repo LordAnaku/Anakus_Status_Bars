@@ -1,11 +1,21 @@
 package io.github.lordanaku.anakus_status_bars.screen.gui.config;
 
+import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
+import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static io.github.lordanaku.anakus_status_bars.utils.ASBModUtils.leftSide;
+import static io.github.lordanaku.anakus_status_bars.utils.ASBModUtils.rightSide;
+
 public final class Settings {
+
+    public static final Map<String, HudElements> registry = new HashMap<>();
+    public static final List<HudElements> hudElementsList = new ArrayList<>();
+
     /* * Should Render Settings */
     public static Map<String, Boolean> shouldRenderSettings = new HashMap<>();
 
@@ -42,7 +52,6 @@ public final class Settings {
         alphaSettings.put("alpha_exhaustion", 0.5f);
     }
 
-
     /* * Icon Settings */
     public static Map<String, Boolean> iconSettings = new HashMap<>();
 
@@ -58,9 +67,21 @@ public final class Settings {
     public static Map<String, ArrayList<String>> positionSettings = new HashMap<>();
 
     public static void registerPositionSettings() {
-        positionSettings.put("left", new ArrayList<>(Arrays.asList("Health", "Armor")));
-        positionSettings.put("right", new ArrayList<>(Arrays.asList("Hunger", "Breath", "MountHealth")));
+        positionSettings.put("left", new ArrayList<>(ASBModUtils.leftOrderDefault));
+        positionSettings.put("right", new ArrayList<>(ASBModUtils.rightOrderDefault));
     }
 
-
+    public static void setupHudElements() {
+        hudElementsList.clear();
+        for (String hudElements : Settings.positionSettings.get("left")) {
+            if (registry.containsKey(hudElements)) {
+                hudElementsList.add(registry.get(hudElements).setSide(leftSide));
+            }
+        }
+        for (String hudElements : Settings.positionSettings.get("right")) {
+            if (registry.containsKey(hudElements)) {
+                hudElementsList.add(registry.get(hudElements).setSide(rightSide));
+            }
+        }
+    }
 }

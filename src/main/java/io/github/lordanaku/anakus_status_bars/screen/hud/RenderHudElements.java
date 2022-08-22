@@ -1,6 +1,7 @@
 package io.github.lordanaku.anakus_status_bars.screen.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 import io.github.lordanaku.anakus_status_bars.utils.ColorUtils;
 import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
@@ -29,7 +30,7 @@ public class RenderHudElements implements HudRenderCallback {
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         hudInit(matrixStack);
 
-        Supplier<Stream<HudElements>> supplier = () -> ASBModUtils.hudElementsList.stream().filter(HudElements::shouldRender);
+        Supplier<Stream<HudElements>> supplier = () -> Settings.hudElementsList.stream().filter(HudElements::shouldRender);
         supplier.get().forEach(hudElements -> {
             hudElements.renderBar();
             ASBModUtils.incrementBars(hudElements.getSide(), -10);

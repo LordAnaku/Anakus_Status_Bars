@@ -15,7 +15,6 @@ import java.util.Map;
 public class ConfigFileHandler {
     public static void readFromConfig() {
         JsonObject root = new JsonObject();
-        Gson gson = new Gson();
         try (FileReader file = new FileReader(getConfigFile())) {
             root = JsonParser.parseReader(file).getAsJsonObject();
         } catch (IOException e) {
@@ -24,33 +23,32 @@ public class ConfigFileHandler {
 
         /* * Load settings * */
         try {
-            JsonObject finalRoot = root;
-            if(finalRoot.has("render_settings")) {
-                JsonObject object = finalRoot.get("render_settings").getAsJsonObject();
+            if(root.has("render_settings")) {
+                JsonObject object = root.get("render_settings").getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
                     Settings.shouldRenderSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
                 }
             }
-            if(finalRoot.has("color_settings")) {
-                JsonObject object = finalRoot.get("color_settings").getAsJsonObject();
+            if(root.has("color_settings")) {
+                JsonObject object = root.get("color_settings").getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
                     Settings.colorSettings.replace(entry.getKey(), entry.getValue().getAsInt());
                 }
             }
-            if(finalRoot.has("alpha_settings")) {
-                JsonObject object = finalRoot.get("alpha_settings").getAsJsonObject();
+            if(root.has("alpha_settings")) {
+                JsonObject object = root.get("alpha_settings").getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
                     Settings.alphaSettings.replace(entry.getKey(), entry.getValue().getAsFloat());
                 }
             }
-            if(finalRoot.has("icon_settings")) {
-                JsonObject object = finalRoot.get("icon_settings").getAsJsonObject();
+            if(root.has("icon_settings")) {
+                JsonObject object = root.get("icon_settings").getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
                     Settings.iconSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
                 }
             }
-            if(finalRoot.has("render_side")) {
-                JsonObject object = finalRoot.get("render_side").getAsJsonObject();
+            if(root.has("render_side")) {
+                JsonObject object = root.get("render_side").getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
                     Settings.positionSettings.replace(entry.getKey(), ASBModUtils.getStringList(entry.getValue().getAsJsonArray()));
                 }
@@ -75,7 +73,7 @@ public class ConfigFileHandler {
             LogHelper.error(e.getMessage());
         }
 
-        ASBModUtils.setupHudElements();
+        Settings.setupHudElements();
 
         try (FileWriter file = new FileWriter(getConfigFile())) {
             file.write(new GsonBuilder().setPrettyPrinting().create().toJson(root));

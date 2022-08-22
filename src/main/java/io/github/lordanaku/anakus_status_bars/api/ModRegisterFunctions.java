@@ -4,8 +4,7 @@ import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 
-import java.util.List;
-
+@SuppressWarnings("unused")
 public class ModRegisterFunctions {
 
     /**
@@ -14,50 +13,49 @@ public class ModRegisterFunctions {
      * @param value The default value for if hud element should render.
      */
     public static void registerShouldRenderModSettings(String key, Boolean value) {
-        Settings.shouldRenderSettings.put(key, value);
+        if (!Settings.shouldRenderSettings.containsKey(key)) Settings.shouldRenderSettings.put(key, value);
     }
 
     /**
-     *  Register Settings for color of hud elements
-     * @param key The key for the setting (probably best to stick to ID chosen for HudElements.)
+     *  Register Settings for color of hud element.
+     * @param key The key for the setting (probably best to stick to Color_ID chosen for HudElements.)
      * @param value The default value for hud element color.
      */
     public static void registerColorModSettings(String key, int value) {
-        Settings.colorSettings.put(key, value);
+        if (!Settings.colorSettings.containsKey(key)) Settings.colorSettings.put(key, value);
     }
 
     /**
-     *  Register Settings for rather or not mod hud elements should render.
-     * @param key The key for the setting (probably best to stick to ID chosen for HudElements.)
+     *  Register Settings for the alpha of hud element.
+     * @param key The key for the setting (probably best to stick to Alpha_ID chosen for HudElements.)
      * @param value The default value for hud element alpha.
      */
     public static void registerAlphaModSettings(String key, float value) {
-        Settings.alphaSettings.put(key, value);
+        if (!Settings.alphaSettings.containsKey(key)) Settings.alphaSettings.put(key, value);
     }
 
     /**
      *  Register Settings for rather or not mod hud elements icon should render.
-     *  @param key The key for the setting (probably best to stick to ID chosen for HudElements.)
+     *  @param key The key for the setting (probably best to stick to Icon_ID chosen for HudElements.)
      *  @param value The default value for if hud element icon should render.
      */
     public static void registerIconModSettings(String key, Boolean value) {
-        Settings.iconSettings.put(key, value);
+        if (!Settings.iconSettings.containsKey(key)) Settings.iconSettings.put(key, value);
     }
 
     /**
      *  Register Default side for your hud element to render on to left side. (only call one or the other)
-     * @param HudElementName The ID of your HudElement. (This must be the same as the ID you gave it in HudElements.)
+     * @param hudElementName The ID of your HudElement. (This must be the same as the ID you gave it in HudElements.)
+     * @param side The default side for your HudElement to render on. (left = true, right = false)
      */
-    public static void addModHudElementToLeftSide(String HudElementName) {
-        ASBModUtils.leftOrderDefault.add(HudElementName);
-    }
-
-    /**
-     *  Register Default side for your hud element to render on to right side. (only call one or the other)
-     * @param HudElementName The ID of your HudElement. (This must be the same as the ID you gave it in HudElements.)
-     */
-    public static void addModHudElementToRightSide(String HudElementName) {
-        ASBModUtils.rightOrderDefault.add(HudElementName);
+    public static void registerHudElementSide(String hudElementName, boolean side) {
+        if (side) {
+            if(!ASBModUtils.leftOrderDefault.contains(hudElementName)) ASBModUtils.setOrderDefaults(hudElementName, true);
+            if(!Settings.positionSettings.get("left").contains(hudElementName)) Settings.positionSettings.get("left").add(hudElementName);
+        } else {
+            if (!ASBModUtils.rightOrderDefault.contains(hudElementName)) ASBModUtils.setOrderDefaults(hudElementName, false);
+            if (!Settings.positionSettings.get("right").contains(hudElementName)) Settings.positionSettings.get("right").add(hudElementName);
+        }
     }
 
     /**
@@ -65,6 +63,6 @@ public class ModRegisterFunctions {
      * @param hudElements The Hud Element to be registered.
      */
     public static void registerModHudElements(HudElements hudElements) {
-        ASBModUtils.registry.put(hudElements.name(), hudElements);
+        if (!Settings.registry.containsKey(hudElements.name())) Settings.registry.put(hudElements.name(), hudElements);
     }
 }
