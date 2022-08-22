@@ -1,10 +1,10 @@
-package io.github.lordanaku.anakus_status_bars.screen.hud.custom;
+package io.github.lordanaku.anakus_status_bars.screen.hud.elements;
 
+import io.github.lordanaku.anakus_status_bars.api.hudelements.RenderHudFunctions;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
-import io.github.lordanaku.anakus_status_bars.screen.hud.RenderHudElements;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
-import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
 import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
+import io.github.lordanaku.anakus_status_bars.utils.TextureRecords;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
@@ -13,39 +13,39 @@ public class HungerHudElement implements HudElements {
     private int currentHunger;
     private int currentSaturation;
     private int currentExhaust;
-    private final int maxProgress = TextureUtils.PROGRESS_BAR.getWidth();
+    private final int maxProgress = 81;
     @Override
     public void renderBar() {
         assert ASBModUtils.getPlayer() != null;
         if (ASBModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
-            RenderHudElements.drawStatusEffectBar(getSide(), ASBModUtils.getPosYMod(getSide()), Settings.colorSettings.get("color_hunger_effect"));
+            RenderHudFunctions.drawStatusEffectBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.DEFAULT_BAR, Settings.colorSettings.get("color_hunger_effect"));
         } else {
-            RenderHudElements.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()));
+            RenderHudFunctions.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.DEFAULT_BAR);
         }
 
         getHunger();
-        RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), currentHunger, Settings.colorSettings.get("color_hunger"), 1);
+        RenderHudFunctions.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.PROGRESS_BAR, currentHunger, Settings.colorSettings.get("color_hunger"), 1);
 
         if (Settings.shouldRenderSettings.get("saturation")) {
             getSaturation();
-            RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), currentSaturation, Settings.colorSettings.get("color_saturation"), 1);
+            RenderHudFunctions.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.PROGRESS_BAR, currentSaturation, Settings.colorSettings.get("color_saturation"), 1);
         }
 
         if (Settings.shouldRenderSettings.get("exhaustion")) {
             getExhaust();
-            RenderHudElements.drawExhaustBar(getSide(), ASBModUtils.getPosYMod(getSide()), currentExhaust, Settings.alphaSettings.get("alpha_exhaustion"));
+            RenderHudFunctions.drawExhaustBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.EXHAUSTION_BAR, currentExhaust, Settings.alphaSettings.get("alpha_exhaustion"));
         }
     }
 
     @Override
     public void renderIcon() {
-        RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_OUTLINE_ICON);
+        RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.HUNGER_OUTLINE_ICON, 81);
 
         assert ASBModUtils.getPlayer() != null;
         if(ASBModUtils.getPlayer().hasStatusEffect(StatusEffects.HUNGER)) {
-            RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_EFFECT_ICON);
+            RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.HUNGER_EFFECT_ICON, 81);
         } else {
-            RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HUNGER_ICON);
+            RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.HUNGER_ICON, 81);
         }
     }
 

@@ -1,10 +1,10 @@
-package io.github.lordanaku.anakus_status_bars.screen.hud.custom;
+package io.github.lordanaku.anakus_status_bars.screen.hud.elements;
 
+import io.github.lordanaku.anakus_status_bars.api.hudelements.RenderHudFunctions;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
-import io.github.lordanaku.anakus_status_bars.screen.hud.RenderHudElements;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
-import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
 import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
+import io.github.lordanaku.anakus_status_bars.utils.TextureRecords;
 import net.minecraft.util.math.MathHelper;
 
 public class BreathBarElement implements HudElements {
@@ -14,19 +14,19 @@ public class BreathBarElement implements HudElements {
     public void renderBar() {
         getBreathPercent();
         if (progress <= 0) {
-            RenderHudElements.drawStatusEffectBar(getSide(), ASBModUtils.getPosYMod(getSide()), Settings.colorSettings.get("color_hurt"));
+            RenderHudFunctions.drawStatusEffectBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.DEFAULT_BAR, Settings.colorSettings.get("color_hurt"));
         } else {
-            RenderHudElements.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()));
+            RenderHudFunctions.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.DEFAULT_BAR);
         }
-        RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), progress, Settings.colorSettings.get("color_breath"), 1);
+        RenderHudFunctions.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.PROGRESS_BAR, progress, Settings.colorSettings.get("color_breath"), 1);
     }
 
     @Override
     public void renderIcon() {
         if (progress <= 0) {
-            RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.BUBBLE_BURST_ICON);
+            RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.BUBBLE_BURST_ICON, 81);
         } else {
-            RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.BUBBLE_ICON);
+            RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.BUBBLE_ICON, 81);
         }
     }
 
@@ -61,7 +61,7 @@ public class BreathBarElement implements HudElements {
         assert ASBModUtils.getPlayer() != null;
         float breath = ASBModUtils.getPlayer().getAir();
         float breathMax = 300;
-        int maxProgress = TextureUtils.PROGRESS_BAR.getWidth();
+        int maxProgress = 81;
         progress = Math.min(maxProgress, MathHelper.ceil(breath / breathMax * maxProgress) + 2);
     }
 }

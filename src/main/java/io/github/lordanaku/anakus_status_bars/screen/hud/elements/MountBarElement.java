@@ -1,10 +1,10 @@
-package io.github.lordanaku.anakus_status_bars.screen.hud.custom;
+package io.github.lordanaku.anakus_status_bars.screen.hud.elements;
 
+import io.github.lordanaku.anakus_status_bars.api.hudelements.RenderHudFunctions;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
-import io.github.lordanaku.anakus_status_bars.screen.hud.RenderHudElements;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
-import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
 import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
+import io.github.lordanaku.anakus_status_bars.utils.TextureRecords;
 import net.minecraft.util.math.MathHelper;
 
 public class MountBarElement implements HudElements {
@@ -13,14 +13,14 @@ public class MountBarElement implements HudElements {
     @Override
     public void renderBar() {
         getMountPercent();
-        RenderHudElements.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()));
-        RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), progress, Settings.colorSettings.get("color_mount"), 1);
+        RenderHudFunctions.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.DEFAULT_BAR);
+        RenderHudFunctions.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.PROGRESS_BAR, progress, Settings.colorSettings.get("color_mount"), 1);
     }
 
     @Override
     public void renderIcon() {
-        RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HEART_OUTLINE_ICON);
-        RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.HEART_MOUNT_ICON);
+        RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.HEART_OUTLINE_ICON, 81);
+        RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.HEART_MOUNT_ICON, 81);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class MountBarElement implements HudElements {
         assert ASBModUtils.getRiddenEntity() != null;
         float mount = ASBModUtils.getRiddenEntity().getHealth();
         float mountMax = ASBModUtils.getRiddenEntity().getMaxHealth();
-        int maxProgress = TextureUtils.PROGRESS_BAR.getWidth();
+        int maxProgress = 81;
         progress = Math.min(maxProgress, MathHelper.ceil(mount / mountMax * maxProgress) + 2);
     }
 }

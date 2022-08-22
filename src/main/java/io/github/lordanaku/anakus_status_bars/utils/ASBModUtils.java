@@ -20,7 +20,7 @@ import java.util.*;
 public class ASBModUtils {
 
     public static final String MOD_ID = "anakus_status_bars";
-    public static final Identifier STATUS_BAR_TEXTURE = new Identifier(MOD_ID, "textures/gui/status_bar.png");
+    public static Identifier defaultTexture = new Identifier(MOD_ID, "textures/gui/status_bar.png");
 
     public final static boolean leftSide = true;
     public final static boolean rightSide = false;

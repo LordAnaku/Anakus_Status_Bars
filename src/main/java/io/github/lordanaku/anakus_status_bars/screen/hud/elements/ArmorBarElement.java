@@ -1,10 +1,10 @@
-package io.github.lordanaku.anakus_status_bars.screen.hud.custom;
+package io.github.lordanaku.anakus_status_bars.screen.hud.elements;
 
+import io.github.lordanaku.anakus_status_bars.api.hudelements.RenderHudFunctions;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
-import io.github.lordanaku.anakus_status_bars.screen.hud.RenderHudElements;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
-import io.github.lordanaku.anakus_status_bars.utils.TextureUtils;
 import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
+import io.github.lordanaku.anakus_status_bars.utils.TextureRecords;
 import net.minecraft.util.math.MathHelper;
 
 public class ArmorBarElement implements HudElements {
@@ -14,13 +14,13 @@ public class ArmorBarElement implements HudElements {
     public void renderBar() {
         assert ASBModUtils.getPlayer() != null;
         getArmorPercent();
-        RenderHudElements.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()));
-        RenderHudElements.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), progress, Settings.colorSettings.get("color_armor"), 1);
+        RenderHudFunctions.drawDefaultBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.DEFAULT_BAR);
+        RenderHudFunctions.drawProgressBar(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.PROGRESS_BAR, progress, Settings.colorSettings.get("color_armor"), 1);
     }
 
     @Override
     public void renderIcon() {
-        RenderHudElements.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureUtils.ARMOR_ICON);
+        RenderHudFunctions.drawIcon(getSide(), ASBModUtils.getPosYMod(getSide()), TextureRecords.ARMOR_ICON, 81);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ArmorBarElement implements HudElements {
         assert ASBModUtils.getPlayer() != null;
         float armor = ASBModUtils.getPlayer().getArmor();
         float armorMax = 20;
-        int maxProgress = TextureUtils.PROGRESS_BAR.getWidth();
+        int maxProgress = 81;
         progress = Math.min(maxProgress, MathHelper.ceil(armor / armorMax * maxProgress) + 2);
     }
 }
