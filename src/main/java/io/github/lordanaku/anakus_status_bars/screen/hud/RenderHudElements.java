@@ -30,20 +30,26 @@ public class RenderHudElements implements HudRenderCallback {
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         hudInit(matrixStack);
 
-        Supplier<Stream<HudElements>> supplier = () -> Settings.hudElementsList.stream().filter(HudElements::shouldRender);
-        supplier.get().forEach(hudElements -> {
-            hudElements.renderBar();
-            ASBModUtils.incrementBars(hudElements.getSide(), -10);
-        });
+        assert ASBModUtils.getPlayer() != null;
+        if (!ASBModUtils.getPlayer().isCreative()) {
 
-        ASBModUtils.resetIncrements();
+            Supplier<Stream<HudElements>> supplier = () -> Settings.hudElementsList.stream().filter(HudElements::shouldRender);
+            supplier.get().forEach(hudElements -> {
+                hudElements.renderBar();
+                ASBModUtils.incrementBars(hudElements.getSide(), -10);
+            });
 
-        supplier.get().forEach(hudElements -> {
-            if(hudElements.shouldRenderIcon()) { hudElements.renderIcon(); }
-            ASBModUtils.incrementBars(hudElements.getSide(), -10);
-        });
+            ASBModUtils.resetIncrements();
 
-        ASBModUtils.resetIncrements();
+            supplier.get().forEach(hudElements -> {
+                if (hudElements.shouldRenderIcon()) {
+                    hudElements.renderIcon();
+                }
+                ASBModUtils.incrementBars(hudElements.getSide(), -10);
+            });
+
+            ASBModUtils.resetIncrements();
+        }
     }
 
     private static void hudInit(MatrixStack matrixStack) {
