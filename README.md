@@ -17,3 +17,4 @@ Replaces the vanilla Minecraft status bars with an alternative that is more cust
 
 ![](https://i.imgur.com/TtitsHT.png)
 
+### [Use this Mod to add status bars to your own mod here!](https://github.com/LordAnaku/Anakus_Status_Bars/wiki)
