@@ -32,23 +32,24 @@ public class RenderHudElements implements HudRenderCallback {
 
         assert ASBModUtils.getPlayer() != null;
         if (!ASBModUtils.getPlayer().isCreative()) {
+            if (!ASBModUtils.getPlayer().isSpectator()){
+                Supplier<Stream<HudElements>> supplier = () -> Settings.hudElementsList.stream().filter(HudElements::shouldRender);
+                supplier.get().forEach(hudElements -> {
+                    hudElements.renderBar();
+                    ASBModUtils.incrementBars(hudElements.getSide(), -10);
+                });
 
-            Supplier<Stream<HudElements>> supplier = () -> Settings.hudElementsList.stream().filter(HudElements::shouldRender);
-            supplier.get().forEach(hudElements -> {
-                hudElements.renderBar();
-                ASBModUtils.incrementBars(hudElements.getSide(), -10);
-            });
+                ASBModUtils.resetIncrements();
 
-            ASBModUtils.resetIncrements();
+                supplier.get().forEach(hudElements -> {
+                    if (hudElements.shouldRenderIcon()) {
+                        hudElements.renderIcon();
+                    }
+                    ASBModUtils.incrementBars(hudElements.getSide(), -10);
+                });
 
-            supplier.get().forEach(hudElements -> {
-                if (hudElements.shouldRenderIcon()) {
-                    hudElements.renderIcon();
-                }
-                ASBModUtils.incrementBars(hudElements.getSide(), -10);
-            });
-
-            ASBModUtils.resetIncrements();
+                ASBModUtils.resetIncrements();
+            }
         }
     }
 
