@@ -6,15 +6,18 @@ Replaces the vanilla Minecraft status bars with an alternative that is more cust
 
 ## Features
 
-* #### Customizable status bars.
+* ### Customizable status bars.
+  * if they should be displayed or not.
+  * Colors
+  * Position
 
-![](https://i.imgur.com/sd6cJ3X.png)
-
-* #### New Style:
+![](https://i.imgur.com/sd6cJ3X.png)~~
+~~
+* ### New Style:
   * Changes bar type to progressive bars.
   * Adds absorption bar to health bar.
   * Adds saturation/exhaustion bars to hunger bar.
 
 ![](https://i.imgur.com/TtitsHT.png)
 
-### [Use this Mod to add status bars to your own mod here!](https://github.com/LordAnaku/Anakus_Status_Bars/wiki)
+## [Use this Mod to add status bars to your own mod here!](https://github.com/LordAnaku/Anakus_Status_Bars/wiki)
