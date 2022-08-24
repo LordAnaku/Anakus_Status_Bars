@@ -54,8 +54,8 @@ public class RenderHudElements implements HudRenderCallback {
 
     private static void hudInit(MatrixStack matrixStack) {
         if (ASBModUtils.getClient() != null) {
-            posXLeft = (ASBModUtils.getScaledWindowWidth() / 2) - 91;
-            posXRight = (ASBModUtils.getScaledWindowWidth() / 2) + 10;
+            posXLeft = ((ASBModUtils.getScaledWindowWidth() / 2) - 91) + Settings.positionOffsets.get("left_x_offset");
+            posXRight = ((ASBModUtils.getScaledWindowWidth() / 2) + 10) + Settings.positionOffsets.get("right_x_offset");
             posY = ASBModUtils.getScaledWindowHeight();
 
             RenderSystem.setShader(GameRenderer::getPositionTexShader);

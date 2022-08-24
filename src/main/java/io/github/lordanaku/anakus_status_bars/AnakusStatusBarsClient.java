@@ -1,6 +1,5 @@
 package io.github.lordanaku.anakus_status_bars;
 
-import io.github.lordanaku.anakus_status_bars.api.ModRegisterFunctions;
 import io.github.lordanaku.anakus_status_bars.api.hudelements.RenderHudFunctions;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.ConfigFileHandler;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
@@ -24,10 +23,8 @@ public class AnakusStatusBarsClient implements ClientModInitializer {
         Settings.registerAlphaSettings();
         Settings.registerIconSettings();
         Settings.registerPositionSettings();
+        Settings.registerPositionOffsets();
         RenderHudFunctions.setYModIncrement(TextureRecords.DEFAULT_BAR.height() + 1);
-        ModRegisterFunctions.registerHudElementSide("Mana", true);
-        ModRegisterFunctions.registerHudElementSide("Mana", true);
-        ModRegisterFunctions.registerHudElementSide("Mana", true);
 
 
 

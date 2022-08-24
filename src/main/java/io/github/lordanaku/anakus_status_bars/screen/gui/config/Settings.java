@@ -12,12 +12,12 @@ import static io.github.lordanaku.anakus_status_bars.utils.ASBModUtils.leftSide;
 import static io.github.lordanaku.anakus_status_bars.utils.ASBModUtils.rightSide;
 
 public final class Settings {
-
     public static final Map<String, HudElements> registry = new HashMap<>();
     public static final List<HudElements> hudElementsList = new ArrayList<>();
 
     /* * Should Render Settings */
     public static Map<String, Boolean> shouldRenderSettings = new HashMap<>();
+
 
     public static void registerShouldRenderSettings() {
         shouldRenderSettings.put("health", true);
@@ -64,21 +64,32 @@ public final class Settings {
     }
 
     /* * Position Settings */
-    public static Map<String, ArrayList<String>> positionSettings = new HashMap<>();
+    public static Map<String, ArrayList<String >> positionOrderSettings = new HashMap<>();
 
     public static void registerPositionSettings() {
-        positionSettings.put("left", new ArrayList<>(ASBModUtils.leftOrderDefault));
-        positionSettings.put("right", new ArrayList<>(ASBModUtils.rightOrderDefault));
+        positionOrderSettings.put("left", new ArrayList<>(ASBModUtils.leftOrderDefault));
+        positionOrderSettings.put("right", new ArrayList<>(ASBModUtils.rightOrderDefault));
     }
+
+    public static Map<String, Integer> positionOffsets = new HashMap<>();
+
+    public static void registerPositionOffsets() {
+        positionOffsets.put("left_y_offset", 40);
+        positionOffsets.put("right_y_offset", 40);
+        positionOffsets.put("left_x_offset", 0);
+        positionOffsets.put("right_x_offset", 0);
+    }
+
+    /* * Setup Elements * */
 
     public static void setupHudElements() {
         hudElementsList.clear();
-        for (String hudElements : Settings.positionSettings.get("left")) {
+        for (String hudElements : positionOrderSettings.get("left")) {
             if (registry.containsKey(hudElements)) {
                 hudElementsList.add(registry.get(hudElements).setSide(leftSide));
             }
         }
-        for (String hudElements : Settings.positionSettings.get("right")) {
+        for (String hudElements : positionOrderSettings.get("right")) {
             if (registry.containsKey(hudElements)) {
                 hudElementsList.add(registry.get(hudElements).setSide(rightSide));
             }

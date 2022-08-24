@@ -14,10 +14,12 @@ public class Config {
         builder.setSavingRunnable(ConfigFileHandler::writeToConfig);
 
         ConfigCategory mainCategory = builder.getOrCreateCategory(Text.translatable("category.anakus_status_bars.general"));
+        ConfigCategory positionCategory = builder.getOrCreateCategory(Text.translatable("category.anakus_status_bars.position"));
         ConfigCategory colorCategory = builder.getOrCreateCategory(Text.translatable("category.anakus_status_bars.color"));
         ConfigCategory iconCategory = builder.getOrCreateCategory(Text.translatable("category.anakus_status_bars.icon"));
 
         ConfigValues.buildMain(mainCategory, builder.entryBuilder());
+        ConfigValues.buildPosition(positionCategory, builder.entryBuilder());
         ConfigValues.buildColors(colorCategory, builder.entryBuilder());
         ConfigValues.buildIcons(iconCategory, builder.entryBuilder());
 

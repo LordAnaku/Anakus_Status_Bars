@@ -12,8 +12,6 @@ import java.util.ArrayList;
 public class ConfigValues{
 
     public static void buildMain(ConfigCategory category, ConfigEntryBuilder builder) {
-
-        /* * Main Category */
         BooleanListEntry enableHealthBar = builder.startBooleanToggle(Text.translatable("option.anakus_status_bars.enable_health_bar"), Settings.shouldRenderSettings.get("health"))
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> Settings.shouldRenderSettings.replace("health", newValue))
@@ -61,18 +59,44 @@ public class ConfigValues{
                 .setSaveConsumer(newValue -> Settings.shouldRenderSettings.replace("mount", newValue))
                 .build();
         category.addEntry(enableMountBar);
+    }
 
-        StringListListEntry leftOrder = builder.startStrList(Text.translatable("option.anakus_status_bars.left_order"), Settings.positionSettings.get("left"))
+    public static void buildPosition(ConfigCategory category, ConfigEntryBuilder builder) {
+        StringListListEntry leftOrder = builder.startStrList(Text.translatable("option.anakus_status_bars.left_order"), Settings.positionOrderSettings.get("left"))
                 .setDefaultValue(ASBModUtils.leftOrderDefault)
-                .setSaveConsumer(newValue -> Settings.positionSettings.replace("left", new ArrayList<>(newValue)))
+                .setSaveConsumer(newValue -> Settings.positionOrderSettings.replace("left", new ArrayList<>(newValue)))
                 .build();
         category.addEntry(leftOrder);
 
-        StringListListEntry rightOrder = builder.startStrList(Text.translatable("option.anakus_status_bars.right_order"), Settings.positionSettings.get("right"))
+        StringListListEntry rightOrder = builder.startStrList(Text.translatable("option.anakus_status_bars.right_order"), Settings.positionOrderSettings.get("right"))
                 .setDefaultValue(ASBModUtils.rightOrderDefault)
-                .setSaveConsumer(newValue -> Settings.positionSettings.replace("right", new ArrayList<>(newValue)))
+                .setSaveConsumer(newValue -> Settings.positionOrderSettings.replace("right", new ArrayList<>(newValue)))
                 .build();
         category.addEntry(rightOrder);
+
+        IntegerListEntry leftYOffset = builder.startIntField(Text.translatable("option.anakus_status_bars.left_y_offset"), Settings.positionOffsets.get("left_y_offset"))
+                .setDefaultValue(40)
+                .setSaveConsumer(newValue -> Settings.positionOffsets.replace("left_y_offset", newValue))
+                .build();
+        category.addEntry(leftYOffset);
+
+        IntegerListEntry rightYOffset = builder.startIntField(Text.translatable("option.anakus_status_bars.right_y_offset"), Settings.positionOffsets.get("right_y_offset"))
+                .setDefaultValue(40)
+                .setSaveConsumer(newValue -> Settings.positionOffsets.replace("right_y_offset", newValue))
+                .build();
+        category.addEntry(rightYOffset);
+
+        IntegerListEntry leftXOffset = builder.startIntField(Text.translatable("option.anakus_status_bars.left_x_offset"), Settings.positionOffsets.get("left_x_offset"))
+                .setDefaultValue(0)
+                .setSaveConsumer(newValue -> Settings.positionOffsets.replace("left_x_offset", newValue))
+                .build();
+        category.addEntry(leftXOffset);
+
+        IntegerListEntry rightXOffset = builder.startIntField(Text.translatable("option.anakus_status_bars.right_x_offset"), Settings.positionOffsets.get("right_x_offset"))
+                .setDefaultValue(0)
+                .setSaveConsumer(newValue -> Settings.positionOffsets.replace("right_x_offset", newValue))
+                .build();
+        category.addEntry(rightXOffset);
     }
 
     public static void buildColors(ConfigCategory category, ConfigEntryBuilder builder) {

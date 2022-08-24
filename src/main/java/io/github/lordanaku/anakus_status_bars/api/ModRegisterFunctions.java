@@ -51,10 +51,10 @@ public class ModRegisterFunctions {
     public static void registerHudElementSide(String hudElementName, boolean side) {
         if (side) {
             if(!ASBModUtils.leftOrderDefault.contains(hudElementName)) ASBModUtils.setOrderDefaults(hudElementName, true);
-            if(!Settings.positionSettings.get("left").contains(hudElementName)) Settings.positionSettings.get("left").add(hudElementName);
+            if(!Settings.positionOrderSettings.get("left").contains(hudElementName)) Settings.positionOrderSettings.get("left").add(hudElementName);
         } else {
             if (!ASBModUtils.rightOrderDefault.contains(hudElementName)) ASBModUtils.setOrderDefaults(hudElementName, false);
-            if (!Settings.positionSettings.get("right").contains(hudElementName)) Settings.positionSettings.get("right").add(hudElementName);
+            if (!Settings.positionOrderSettings.get("right").contains(hudElementName)) Settings.positionOrderSettings.get("right").add(hudElementName);
         }
     }
 

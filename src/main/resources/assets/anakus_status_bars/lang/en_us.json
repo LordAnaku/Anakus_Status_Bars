@@ -10,8 +10,14 @@
   "option.anakus_status_bars.enable_absorption_bar": "Enable Absorption Bar",
   "option.anakus_status_bars.enable_breath_bar": "Enable Breath Bar",
   "option.anakus_status_bars.enable_mount_bar": "Enable Mount Bar",
+
+  "category.anakus_status_bars.position": "Position",
   "option.anakus_status_bars.left_order": "These bars will be displayed on the left",
   "option.anakus_status_bars.right_order": "These bars will be displayed on the right",
+  "option.anakus_status_bars.left_y_offset": "Y-offset for the left bars",
+  "option.anakus_status_bars.right_y_offset": "Y-offset for the right bars",
+  "option.anakus_status_bars.left_x_offset": "X-offset for the left bars",
+  "option.anakus_status_bars.right_x_offset": "X-offset for the right bars",
 
   "category.anakus_status_bars.color": "Colors",
   "option.anakus_status_bars.health_bar_color": "Health Bar Color",

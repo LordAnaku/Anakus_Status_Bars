@@ -28,8 +28,8 @@ public class ASBModUtils {
     public static ArrayList<String> leftOrderDefault = new ArrayList<>(Arrays.asList("Health", "Armor"));
     public static ArrayList<String> rightOrderDefault = new ArrayList<>(Arrays.asList("Hunger", "Breath", "MountHealth"));
 
-    public static int leftSideIncrement = -40;
-    public static int rightSideIncrement = -40;
+    public static int leftSideIncrement;
+    public static int rightSideIncrement;
 
     public static MinecraftClient getClient() {
         return MinecraftClient.getInstance();
@@ -89,8 +89,8 @@ public class ASBModUtils {
     }
 
     public static void resetIncrements() {
-        leftSideIncrement = -40;
-        rightSideIncrement = -40;
+        leftSideIncrement = -Settings.positionOffsets.get("left_y_offset");
+        rightSideIncrement = -Settings.positionOffsets.get("right_y_offset");
     }
 
     @SuppressWarnings("unused")
