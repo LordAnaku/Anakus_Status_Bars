@@ -18,21 +18,14 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 public class AnakusStatusBarsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        Settings.registerShouldRenderSettings();
-        Settings.registerColorSettings();
-        Settings.registerAlphaSettings();
-        Settings.registerIconSettings();
-        Settings.registerPositionSettings();
-        Settings.registerPositionOffsets();
+        Settings.registerElementSettings();
         RenderHudFunctions.setYModIncrement(TextureRecords.DEFAULT_BAR.height() + 1);
-
-
 
         LogHelper.info("Loaded");
         ConfigFileHandler.readFromConfig();
         ClientSyncHandler.init();
 
-        ASBModUtils.registerHudElements(new HealthHudElement(), new HungerHudElement(), new ArmorBarElement(), new MountBarElement(), new BreathBarElement());
+        ASBModUtils.registerHudElements(new HealthIHudElement(), new HungerIHudElement(), new ArmorBarElement(), new MountBarElement(), new BreathBarElement());
 
         HudRenderCallback.EVENT.register(new RenderHudElements());
 

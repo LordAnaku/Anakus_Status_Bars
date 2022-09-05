@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
 import io.github.lordanaku.anakus_status_bars.utils.ColorUtils;
 import io.github.lordanaku.anakus_status_bars.utils.TextureRecord;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.util.Identifier;
 
@@ -72,6 +73,25 @@ public class RenderHudFunctions {
                 textureRecord.startX(), textureRecord.startY(),
                 textureRecord.width(), textureRecord.height(),
                 textureRecord.maxWidth(), textureRecord.maxHeight());
+    }
+
+    /**
+     * Draws the text for the Hud Element.
+     * @param text - the text to draw.
+     * @param side - true if the bar is on the left side of the screen, false if on the right side.
+     * @param icon - rather or not the icon is being drawn.
+     * @param posYMod - the amount you want to add to the base -40 y position.
+     * @param color - the color of the text. (Hex Value)
+     * @param barWidth - the width of the bar so method can determine offset.
+     */
+    public static void drawText(String text, boolean side, boolean icon, int posYMod, int color, int barWidth) {
+        int finalSide = (side) ? posXLeft - (MinecraftClient.getInstance().textRenderer.getWidth(text) + 1) : posXRight + (barWidth + 1);
+
+        if (icon) {
+            finalSide = (side) ? posXLeft - (MinecraftClient.getInstance().textRenderer.getWidth(text) + 1) - 10 : posXRight + (barWidth + 1) + 10;
+        }
+
+        MinecraftClient.getInstance().textRenderer.drawWithShadow(hudMatrix, text, finalSide, posY + posYMod + 1, color);
     }
 
     /**

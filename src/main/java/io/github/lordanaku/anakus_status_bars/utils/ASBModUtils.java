@@ -2,7 +2,7 @@ package io.github.lordanaku.anakus_status_bars.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
+import io.github.lordanaku.anakus_status_bars.api.hudelements.IHudElement;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -24,10 +24,6 @@ public class ASBModUtils {
 
     public final static boolean leftSide = true;
     public final static boolean rightSide = false;
-
-    public static ArrayList<String> leftOrderDefault = new ArrayList<>(Arrays.asList("Health", "Armor"));
-    public static ArrayList<String> rightOrderDefault = new ArrayList<>(Arrays.asList("Hunger", "Breath", "MountHealth"));
-
     public static int leftSideIncrement;
     public static int rightSideIncrement;
 
@@ -68,15 +64,15 @@ public class ASBModUtils {
         return null;
     }
 
-    public static void registerHudElements(HudElements... hudElements) {
-        Arrays.stream(hudElements).forEach(hudElement -> Settings.registry.put(hudElement.name(), hudElement));
+    public static void registerHudElements(IHudElement... IHudElements) {
+        Arrays.stream(IHudElements).forEach(hudElement -> Settings.registry.put(hudElement.name(), hudElement));
     }
 
     public static void setOrderDefaults(String id, boolean side) {
         if (side) {
-            leftOrderDefault.add(id);
+            Settings.leftOrderDefault.add(id);
         } else {
-            rightOrderDefault.add(id);
+            Settings.rightOrderDefault.add(id);
         }
     }
 

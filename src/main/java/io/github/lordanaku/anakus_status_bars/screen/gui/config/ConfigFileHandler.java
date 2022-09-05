@@ -29,22 +29,34 @@ public class ConfigFileHandler {
                     Settings.shouldRenderSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
                 }
             }
+            if(root.has("icon_settings")) {
+                JsonObject object = root.get("icon_settings").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.iconSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
+                }
+            }
+            if(root.has("text_settings")) {
+                JsonObject object = root.get("text_settings").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.textSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
+                }
+            }
             if(root.has("color_settings")) {
                 JsonObject object = root.get("color_settings").getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
                     Settings.colorSettings.replace(entry.getKey(), entry.getValue().getAsInt());
                 }
             }
+            if(root.has("text_color_settings")) {
+                JsonObject object = root.get("text_color_settings").getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                    Settings.textColorSettings.replace(entry.getKey(), entry.getValue().getAsInt());
+                }
+            }
             if(root.has("alpha_settings")) {
                 JsonObject object = root.get("alpha_settings").getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
                     Settings.alphaSettings.replace(entry.getKey(), entry.getValue().getAsFloat());
-                }
-            }
-            if(root.has("icon_settings")) {
-                JsonObject object = root.get("icon_settings").getAsJsonObject();
-                for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-                    Settings.iconSettings.replace(entry.getKey(), entry.getValue().getAsBoolean());
                 }
             }
             if(root.has("render_side")) {
@@ -71,9 +83,11 @@ public class ConfigFileHandler {
 
         try {
             root.add("render_settings", gson.toJsonTree(Settings.shouldRenderSettings));
-            root.add("color_settings", gson.toJsonTree(Settings.colorSettings));
-            root.add("alpha_settings", gson.toJsonTree(Settings.alphaSettings));
             root.add("icon_settings", gson.toJsonTree(Settings.iconSettings));
+            root.add("text_settings", gson.toJsonTree(Settings.textSettings));
+            root.add("color_settings", gson.toJsonTree(Settings.colorSettings));
+            root.add("text_color_settings", gson.toJsonTree(Settings.textColorSettings));
+            root.add("alpha_settings", gson.toJsonTree(Settings.alphaSettings));
             root.add("render_side", gson.toJsonTree(Settings.positionOrderSettings));
             root.add("offsets", gson.toJsonTree(Settings.positionOffsets));
         } catch (Exception e) {

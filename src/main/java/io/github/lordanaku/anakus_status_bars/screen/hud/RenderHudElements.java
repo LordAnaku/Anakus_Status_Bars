@@ -1,18 +1,14 @@
 package io.github.lordanaku.anakus_status_bars.screen.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.lordanaku.anakus_status_bars.api.hudelements.IHudElement;
 import io.github.lordanaku.anakus_status_bars.screen.gui.config.Settings;
 import io.github.lordanaku.anakus_status_bars.utils.ASBModUtils;
-import io.github.lordanaku.anakus_status_bars.api.hudelements.HudElements;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-
-
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 @Environment(EnvType.CLIENT)
 public class RenderHudElements implements HudRenderCallback {
@@ -32,25 +28,45 @@ public class RenderHudElements implements HudRenderCallback {
         assert ASBModUtils.getPlayer() != null;
         if (!ASBModUtils.getPlayer().isCreative()) {
             if (!ASBModUtils.getPlayer().isSpectator()){
-                Supplier<Stream<HudElements>> supplier = () -> Settings.hudElementsList.stream().filter(HudElements::shouldRender);
-                supplier.get().forEach(hudElements -> {
-                    hudElements.renderBar();
-                    ASBModUtils.incrementBars(hudElements.getSide(), -yModIncrement);
-                });
-
-                ASBModUtils.resetIncrements();
-
-                supplier.get().forEach(hudElements -> {
-                    if (hudElements.shouldRenderIcon()) {
-                        hudElements.renderIcon();
+                for (IHudElement hudElement : Settings.I_HUD_ELEMENTS_LIST) {
+                    if (hudElement.shouldRender()) {
+                        hudElement.renderBar();
+                        if(hudElement.shouldRenderIcon()) {
+                            hudElement.renderIcon();
+                        }
+                        ASBModUtils.incrementBars(hudElement.getSide(), -yModIncrement);
                     }
-                    ASBModUtils.incrementBars(hudElements.getSide(), -yModIncrement);
-                });
-
+                }
+                ASBModUtils.resetIncrements();
+                for (IHudElement hudElement : Settings.I_HUD_ELEMENTS_LIST) {
+                    if (hudElement.shouldRender()) {
+                        if (hudElement.shouldRenderText()) {
+                            hudElement.renderText();
+                        }
+                        ASBModUtils.incrementBars(hudElement.getSide(), -yModIncrement);
+                    }
+                }
                 ASBModUtils.resetIncrements();
             }
         }
     }
+
+//    Supplier<Stream<IHudElement>> supplier = () -> Settings.I_HUD_ELEMENTS_LIST.stream().filter(IHudElement::shouldRender);
+//                supplier.get().forEach(hudElements -> {
+//        hudElements.renderBar();
+//        ASBModUtils.incrementBars(hudElements.getSide(), -yModIncrement);
+//    });
+//
+//                ASBModUtils.resetIncrements();
+//
+//                supplier.get().forEach(hudElements -> {
+//        if (hudElements.shouldRenderIcon()) {
+//            hudElements.renderIcon();
+//        }
+//        ASBModUtils.incrementBars(hudElements.getSide(), -yModIncrement);
+//    });
+//
+//                ASBModUtils.resetIncrements();
 
     private static void hudInit(MatrixStack matrixStack) {
         if (ASBModUtils.getClient() != null) {
