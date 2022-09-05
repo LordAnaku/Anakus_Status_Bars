@@ -14,7 +14,7 @@ Replaces the vanilla Minecraft status bars with an alternative that is more cust
 > * Colors
 > * Position
 
-![](https://i.imgur.com/sd6cJ3X.png)
+![](https://i.imgur.com/09NaQtf.png)
 
 ---
 
