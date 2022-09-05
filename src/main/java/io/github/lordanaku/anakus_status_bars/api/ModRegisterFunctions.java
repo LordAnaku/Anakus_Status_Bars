@@ -44,6 +44,15 @@ public class ModRegisterFunctions {
     }
 
     /**
+     *  Register Settings for rather or not mod hud elements should render on the left or right side of the screen.
+     *  @param key The key for the setting (probably best to stick to ID chosen for IHudElement.)
+     *  @param value The default value for if hud element should render text (default is false).
+     */
+    public static void registerTextModSettings(String key, Boolean value) {
+        if (!Settings.textSettings.containsKey(key)) Settings.textSettings.put(key, value);
+    }
+
+    /**
      *  Register Default side for your hud element to render on to left side. (only call one or the other)
      * @param hudElementName The ID of your HudElement. (This must be the same as the ID you gave it in IHudElement.)
      * @param side The default side for your HudElement to render on. (left = true, right = false)
