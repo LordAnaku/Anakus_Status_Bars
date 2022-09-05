@@ -26,6 +26,15 @@ public class ModRegisterFunctions {
     }
 
     /**
+     *  Register Settings for color of hud element text.
+     * @param key The key for the setting (probably best to stick to ID chosen for IHudElement.)
+     * @param value The default value for hud element text color.
+     */
+    public static void registerTextColorModSettings(String key, int value) {
+        if (!Settings.textColorSettings.containsKey(key)) Settings.textColorSettings.put(key, value);
+    }
+
+    /**
      *  Register Settings for the alpha of hud element.
      * @param key The key for the setting (probably best to stick to Alpha_ID chosen for IHudElement.)
      * @param value The default value for hud element alpha.
@@ -44,7 +53,7 @@ public class ModRegisterFunctions {
     }
 
     /**
-     *  Register Settings for rather or not mod hud elements should render on the left or right side of the screen.
+     *  Register Settings for rather or not mod hud elements should render text.
      *  @param key The key for the setting (probably best to stick to ID chosen for IHudElement.)
      *  @param value The default value for if hud element should render text (default is false).
      */
